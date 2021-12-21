@@ -15,11 +15,26 @@ module.exports = {
       {
         name: 'Jean',
       },
-    ]);
-
-    await queryInterface.bulkInsert('Admins', [
       {
         name: 'Jules',
+      },
+    ]);
+
+    await queryInterface.bulkInsert('Settings', [
+      {
+        name: 'prefix',
+        key_string: '!',
+      },
+    ]);
+
+    await queryInterface.bulkInsert('Streams', [
+      {
+        name: 'Florian',
+        url: 'https://twitch.fr/Florian',
+      },
+      {
+        name: 'Quentin',
+        url: 'https://twitch.fr/Quentin',
       },
     ]);
   },
@@ -32,5 +47,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     await queryInterface.bulkDelete('Admins', null, {});
+    await queryInterface.bulkDelete('Settings', null, {});
+    await queryInterface.bulkDelete('Streams', null, {});
   },
 };

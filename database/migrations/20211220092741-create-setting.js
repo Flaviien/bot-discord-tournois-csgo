@@ -6,10 +6,13 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
+        unique: true,
       },
-      number_key: {
-        allowNull: false,
+      key_int: {
         type: Sequelize.INTEGER,
+      },
+      key_string: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

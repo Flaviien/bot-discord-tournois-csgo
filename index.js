@@ -1,12 +1,24 @@
-const db = require('../database/models/index.js');
+const Discord = require('discord.js');
+const messageCreate = require('./events/message/messageCreate');
+const { loadCommands, loadEvents } = require('./utils/loader');
 
-const testDB = async () => {
-  try {
-    await db.sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
+let intents = new Discord.Intents(Discord.Intents.NON_PRIVILEGED);
+intents.add('GUILD_MEMBERS');
+intents.add('GUILDS');
+intents.add('GUILD_MESSAGES');
 
-testDB();
+const client = new Discord.Client({
+  intents: intents,
+});
+
+require('./utils/functions')(client);
+client.config = require('./config');
+client.sequelize = require('./utils/sequelize');
+client.commands = new Discord.Collection();
+
+loadCommands(client);
+loadEvents(client);
+
+client.login(client.config.TOKEN);
+
+// console.log(client);

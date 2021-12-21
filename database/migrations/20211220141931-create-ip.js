@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Mappools', {
+    await queryInterface.createTable('Ips', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,10 +12,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
-      },
-      maps_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +26,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Mappools');
+    await queryInterface.dropTable('Ips');
   },
 };

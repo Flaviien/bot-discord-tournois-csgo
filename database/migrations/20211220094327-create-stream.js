@@ -2,13 +2,12 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Streams', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
       name: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      url: {
         allowNull: false,
         type: Sequelize.STRING,
       },
