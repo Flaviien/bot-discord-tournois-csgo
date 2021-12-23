@@ -25,6 +25,10 @@ module.exports = {
         name: 'prefix',
         key_string: '!',
       },
+      {
+        name: 'permission',
+        key_int: '1',
+      },
     ]);
 
     await queryInterface.bulkInsert('Streams', [

@@ -1,4 +1,5 @@
 module.exports.run = async (client, message, args) => {
+  if (args[0].length > 2) return;
   message.channel.send(await client.updatePrefix(args[0]));
 };
 
