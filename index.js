@@ -11,7 +11,7 @@ const client = new Discord.Client({
   intents: intents,
 });
 
-require('./utils/functions')(client);
+require('./utils/functions/index')(client);
 client.config = require('./config');
 client.sequelize = require('./utils/sequelize');
 client.commands = new Discord.Collection();

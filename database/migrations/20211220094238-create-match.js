@@ -2,10 +2,10 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Matches', {
-      id: {
+      matchId: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING,
       },
       teams_id_1: {
         type: Sequelize.INTEGER,
@@ -13,7 +13,7 @@ module.exports = {
       teams_id_2: {
         type: Sequelize.INTEGER,
       },
-      ingame: {
+      isIngame: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
       },

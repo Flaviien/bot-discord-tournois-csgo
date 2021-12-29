@@ -2,24 +2,28 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Members', {
-      id: {
+      memberId: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
       },
-      leader: {
+      isLeader: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
       },
       teams_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Teams',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
