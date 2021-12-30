@@ -7,12 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING,
       },
-      teams_id_1: {
-        type: Sequelize.INTEGER,
-      },
-      teams_id_2: {
-        type: Sequelize.INTEGER,
-      },
       isIngame: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

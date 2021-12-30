@@ -141,12 +141,12 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     await queryInterface.bulkDelete('Admins', null, {});
-    await queryInterface.bulkDelete('Checkins', null, {});
     await queryInterface.bulkDelete('Ips', null, {});
     await queryInterface.bulkDelete('Streams', null, {});
     await queryInterface.bulkDelete('Maps', null, {});
     await queryInterface.bulkDelete('Teams', null, {});
     await queryInterface.bulkDelete('Members', null, {});
     await queryInterface.bulkDelete('Matches', null, {});
+    await queryInterface.bulkDelete('MatchTeams', null, {});
   },
 };

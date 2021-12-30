@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Match.belongsTo(models.Team, {
-        foreignKey: 'teams_id_1',
-        foreignKey: 'teams_id_2',
+      Match.belongsToMany(models.Team, {
+        through: 'MatchTeams',
+        foreignKey: 'matches_id',
       });
     }
   }
@@ -20,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      teams_id_1: DataTypes.INTEGER,
-      teams_id_2: DataTypes.INTEGER,
       isIngame: DataTypes.BOOLEAN,
       winner: DataTypes.STRING,
       score: DataTypes.STRING,

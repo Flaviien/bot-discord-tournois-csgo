@@ -1,5 +1,5 @@
 module.exports.run = async (client, message, args) => {
-  await client.updateCheckin(args[0]);
+  await client.updateCheckinTimer(args[0]);
 };
 
 module.exports.help = {

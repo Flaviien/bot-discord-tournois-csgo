@@ -52,7 +52,7 @@ module.exports = (client) => {
     }
   };
 
-  client.updateCheckin = async (newCheckin) => {
+  client.updateCheckinTimer = async (newCheckin) => {
     try {
       const checkin = await Setting.findOne({
         where: { name: 'checkin_time' },
