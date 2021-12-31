@@ -28,6 +28,7 @@ module.exports.help = {
   category: 'Infos',
   description:
     'Retourne la liste des matchs ou retourne les détails du match en paramètre',
+  cooldown: 30,
   usage: '',
   adminMention: false,
   permissions: false,

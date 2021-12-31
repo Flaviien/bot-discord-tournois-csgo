@@ -2,9 +2,20 @@ const models = require('../../database/models/index.js');
 const Team = models.Team;
 
 module.exports = (client) => {
-  client.getTeam = async (teamName) => {
-    const team = await Team.findOne({ where: { name: teamName } });
-    return team;
+  client.getTeam = async (teamName = null, teamId = null) => {
+    //By Name or by Id
+    try {
+      if (teamName !== null) {
+        const team = await Team.findOne({ where: { name: teamName } });
+        return team;
+      }
+      if (teamId !== null) {
+        const team = await Team.findOne({ where: { id: teamId } });
+        return team;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   client.getTeams = async () => {

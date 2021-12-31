@@ -32,6 +32,7 @@ module.exports.help = {
   category: 'Infos',
   description:
     "Retourne la liste des équipes ou retourne les détails de l'équipe en paramètre",
+  cooldown: 30,
   usage: '',
   adminMention: false,
   permissions: false,

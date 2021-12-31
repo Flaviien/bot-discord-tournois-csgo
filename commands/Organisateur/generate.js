@@ -3,9 +3,7 @@ module.exports.run = async (client, message, args) => {
   const nbrTeams = await client.getNbrTeams();
 
   if (teams.length !== nbrTeams) {
-    return message.channel.send(
-      `Le nombre d'équipe pour générer les matchs n'est pas suffisant: ${teams.length}/${nbrTeams}`
-    );
+    return message.channel.send(`Le nombre d'équipe pour générer les matchs n'est pas suffisant: ${teams.length}/${nbrTeams}`);
   }
 
   const shuffleArray = (array) => {

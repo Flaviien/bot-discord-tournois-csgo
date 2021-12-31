@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const messageCreate = require('./events/message/messageCreate');
 const { loadCommands, loadEvents } = require('./utils/loader');
 
 let intents = new Discord.Intents(Discord.Intents.NON_PRIVILEGED);
@@ -10,6 +9,10 @@ intents.add('GUILD_MESSAGES');
 const client = new Discord.Client({
   intents: intents,
 });
+
+['commands', 'cooldowns'].forEach(
+  (x) => (client[x] = new Discord.Collection())
+);
 
 require('./utils/functions/index')(client);
 client.config = require('./config');

@@ -46,6 +46,7 @@ module.exports.help = {
   category: 'Infos',
   description:
     "Permet d'afficher, d'ajouter, de modifier ou de retirer un stream en cours",
+  cooldown: 30,
   usage: '',
   adminMention: false,
   permissions: false,

@@ -3,6 +3,15 @@ const Match = models.Match;
 const MatchTeams = models.MatchTeams;
 
 module.exports = (client) => {
+  client.getMatchTeams = async (matches_id) => {
+    try {
+      const matches = await MatchTeams.findAll({ where: { matches_id } });
+      return matches;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   client.getMatches = async () => {
     try {
       const matches = await Match.findAll();
@@ -33,11 +42,14 @@ module.exports = (client) => {
     }
   };
 
-  client.updateCheckin = async (matches_id) => {
+  client.updateCheckinStatus = async (matches_id, value) => {
+    //value = 0 (Aucun checkin n'est lancé)
+    //value = 1 (l'organisateur a lancé le checkin)
+    //value = 2 (l'équipe s'est présentée)
     try {
       const matches = await MatchTeams.findAll({ where: { matches_id } });
       for (const match of matches) {
-        await match.update({ checkin: 1 });
+        await match.update({ checkin: value });
       }
     } catch (error) {
       console.log(error);

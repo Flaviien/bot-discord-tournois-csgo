@@ -52,6 +52,15 @@ module.exports = (client) => {
     }
   };
 
+  client.getCheckinTime = async () => {
+    try {
+      const checkinTime = await Setting.findOne({ where: { name: 'checkin_time' } });
+      return checkinTime.key_int;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   client.updateCheckinTimer = async (newCheckin) => {
     try {
       const checkin = await Setting.findOne({

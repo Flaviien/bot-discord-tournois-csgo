@@ -1,9 +1,4 @@
-module.exports.run = async (client, message, args) => {
-  const teamName = args[0];
-
-  const team = await client.getTeam(teamName);
-  console.log(team.name.toLowerCase() == 'vscode');
-};
+module.exports.run = async (client, message, args) => {};
 
 module.exports.help = {
   name: 'test',
