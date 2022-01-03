@@ -147,6 +147,7 @@ module.exports = {
     await queryInterface.bulkDelete('Teams', null, {});
     await queryInterface.bulkDelete('Members', null, {});
     await queryInterface.bulkDelete('Matches', null, {});
-    await queryInterface.bulkDelete('MatchTeams', null, {});
+    await queryInterface.bulkDelete('Meetings', null, {});
+    await queryInterface.bulkDelete('MeetingTeams', null, {});
   },
 };

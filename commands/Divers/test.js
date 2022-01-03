@@ -1,4 +1,6 @@
-module.exports.run = async (client, message, args) => {};
+module.exports.run = async (client, message, args) => {
+  console.log(client.matches);
+};
 
 module.exports.help = {
   name: 'test',

@@ -1,6 +1,6 @@
 module.exports.run = async (client, message, args) => {
   await client.removeTeams();
-  await client.removeMatches();
+  await client.removeMeetings();
 };
 
 module.exports.help = {

@@ -1,12 +1,11 @@
 const models = require('../../database/models/index.js');
 const Match = models.Match;
-const MatchTeams = models.MatchTeams;
 
 module.exports = (client) => {
-  client.getMatchTeams = async (matches_id) => {
+  client.getMatch = async (matchId) => {
     try {
-      const matches = await MatchTeams.findAll({ where: { matches_id } });
-      return matches;
+      const match = await Match.findOne({ where: { matchId } });
+      return match;
     } catch (error) {
       console.log(error);
     }
@@ -21,36 +20,18 @@ module.exports = (client) => {
     }
   };
 
-  client.addMatch = async (matchId, teams_id_1, teams_id_2, isIngame = 0) => {
+  client.addMatch = async (matchId, meetings_id) => {
     try {
-      await Match.create({ matchId, isIngame });
-      await MatchTeams.create({ matches_id: matchId, teams_id: teams_id_1 });
-      await MatchTeams.create({ matches_id: matchId, teams_id: teams_id_2 });
+      await Match.create({ matchId, meetings_id });
     } catch (error) {
       console.log(error);
     }
   };
 
-  client.removeMatches = async () => {
+  client.updateMatch = async (matchId, key, value) => {
     try {
-      const matches = await Match.findAll();
-      matches.forEach(async (match) => {
-        await match.destroy();
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  client.updateCheckinStatus = async (matches_id, value) => {
-    //value = 0 (Aucun checkin n'est lancé)
-    //value = 1 (l'organisateur a lancé le checkin)
-    //value = 2 (l'équipe s'est présentée)
-    try {
-      const matches = await MatchTeams.findAll({ where: { matches_id } });
-      for (const match of matches) {
-        await match.update({ checkin: value });
-      }
+      const match = await client.getMatch(matchId);
+      await match.update({ [key]: value });
     } catch (error) {
       console.log(error);
     }

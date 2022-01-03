@@ -2,10 +2,14 @@ const models = require('../../database/models/index.js');
 const Setting = models.Setting;
 
 module.exports = (client) => {
-  client.getPrefix = async () => {
-    const prefix = await Setting.findOne({ where: { name: 'prefix' } });
-    if (prefix) return prefix.key_string;
-    return client.config.DEFAULTSETTINGS.prefix;
+  client.getSetting = async (name) => {
+    try {
+      const setting = await Setting.findOne({ where: { name } });
+      if (setting && setting.key_int !== null) return setting.key_int;
+      if (setting && setting.key_string !== null) return setting.key_string;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   client.updatePrefix = async (newPrefix) => {
@@ -33,29 +37,11 @@ module.exports = (client) => {
     }
   };
 
-  client.getNbrTeams = async () => {
-    try {
-      const nbrTeams = await Setting.findOne({ where: { name: 'nbr_teams' } });
-      if (nbrTeams) return nbrTeams.key_int;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   client.updateNbrTeams = async (newNbrTeams) => {
     try {
       const nbrTeams = await Setting.findOne({ where: { name: 'nbr_teams' } });
       await nbrTeams.update({ key_int: newNbrTeams });
       return "Le nombre d'équipe a été modifié";
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  client.getCheckinTime = async () => {
-    try {
-      const checkinTime = await Setting.findOne({ where: { name: 'checkin_time' } });
-      return checkinTime.key_int;
     } catch (error) {
       console.log(error);
     }

@@ -10,14 +10,12 @@ const client = new Discord.Client({
   intents: intents,
 });
 
-['commands', 'cooldowns'].forEach(
-  (x) => (client[x] = new Discord.Collection())
-);
+['commands', 'cooldowns'].forEach((x) => (client[x] = new Discord.Collection()));
 
 require('./utils/functions/index')(client);
 client.config = require('./config');
-client.sequelize = require('./utils/sequelize');
 client.commands = new Discord.Collection();
+client.matches = new Discord.Collection();
 
 loadCommands(client);
 loadEvents(client);

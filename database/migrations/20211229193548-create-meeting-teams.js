@@ -1,14 +1,14 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('MatchTeams', {
-      matches_id: {
+    await queryInterface.createTable('MeetingTeams', {
+      meetings_id: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true,
         references: {
-          model: 'Matches',
-          key: 'matchId',
+          model: 'Meetings',
+          key: 'meetingId',
         },
       },
       teams_id: {
@@ -19,11 +19,6 @@ module.exports = {
           model: 'Teams',
           key: 'id',
         },
-      },
-      checkin: {
-        type: Sequelize.TINYINT,
-        allowNull: false,
-        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +31,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('MatchTeams');
+    await queryInterface.dropTable('MeetingTeams');
   },
 };

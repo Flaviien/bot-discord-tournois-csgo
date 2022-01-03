@@ -23,6 +23,10 @@ module.exports = {
         name: 'veto',
         key_int: 0,
       },
+      {
+        name: 'default_BO',
+        key_int: 1,
+      },
     ]);
   },
 

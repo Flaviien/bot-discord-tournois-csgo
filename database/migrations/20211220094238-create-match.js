@@ -7,9 +7,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING,
       },
+      meetings_id: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: 'Meetings',
+          key: 'meetingId',
+        },
+        onDelete: 'CASCADE',
+      },
       isIngame: {
         allowNull: false,
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.TINYINT,
+        defaultValue: 0,
       },
       winner: {
         type: Sequelize.STRING,

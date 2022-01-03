@@ -11,7 +11,7 @@ module.exports = async (client, message) => {
     //TODO: Faire un système d'avertissement.
   }
 
-  const prefix = await client.getPrefix();
+  const prefix = await client.getSetting('prefix');
 
   if (message.author.bot) return; //Si le message est écrit par un bot.
   if (!message.content.startsWith(prefix)) return; //Si le message n'a pas de préfix.
