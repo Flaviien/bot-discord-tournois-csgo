@@ -27,9 +27,13 @@ module.exports = (client) => {
     }
   };
 
-  client.addTeam = async (teamName, teamRole) => {
+  client.addTeam = async (teamName, teamRole, teamChannel) => {
     try {
-      await Team.create({ name: teamName, roleId: teamRole });
+      await Team.create({
+        name: teamName,
+        roleId: teamRole,
+        channelId: teamChannel,
+      });
       return "L'équipe a été créée";
     } catch (error) {
       return "Erreur, l'équipe n'a pas été ajoutée";

@@ -47,6 +47,16 @@ module.exports = (client) => {
     }
   };
 
+  client.updateBO = async (newBO) => {
+    try {
+      const BO = await Setting.findOne({ where: { name: 'default_BO' } });
+      await BO.update({ key_int: newBO });
+      return 'Le BO par défaut a été modifié';
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   client.updateCheckinTimer = async (newCheckin) => {
     try {
       const checkin = await Setting.findOne({

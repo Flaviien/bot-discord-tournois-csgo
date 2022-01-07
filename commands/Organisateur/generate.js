@@ -5,7 +5,9 @@ module.exports.run = async (client, message, args) => {
   const nbrTeams = await client.getSetting('nbr_teams');
 
   if (teams.length !== nbrTeams) {
-    return message.channel.send(`Le nombre d'équipe pour générer les rencontres n'est pas suffisant: ${teams.length}/${nbrTeams}`);
+    return message.channel.send(
+      `Le nombre d'équipe pour générer les rencontres n'est pas suffisant: ${teams.length}/${nbrTeams}`
+    );
   }
 
   //Boucle qui mélange un tableau (modifie le tableau d'origine)
