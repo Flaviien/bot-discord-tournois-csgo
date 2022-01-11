@@ -1,4 +1,12 @@
 module.exports.run = async (client, message, args) => {
+  /*
+  exemple: !unsub @equipe1
+  Supprime le role de l'équipe
+  Supprime le channel de l'équipe
+  Supprime l'équipe en database
+  //Supprime les membres en database
+  */
+
   const meetings = await client.getMeetings();
   if (meetings.length !== 0) {
     return message.channel.send(
@@ -6,15 +14,32 @@ module.exports.run = async (client, message, args) => {
     );
   }
 
-  const teamMention = args[0];
-  const teamRoleId = await client.removeTeam(teamMention);
+  try {
+    const teamMention = message.mentions.roles;
+    const team = await client.removeTeam(teamMention.firstKey());
+  } catch (error) {
+    console.log(error);
+  }
 
-  const role = await message.guild.roles.fetch(teamRoleId);
-  role.members.forEach(async (member) => {
-    await member.roles.remove(role);
-  });
+  try {
+    const keepRole = args.find((x) => x.toLowerCase() === '--keeprole'); //Si --keeprole est trouvé dans les arguments, on effectue pas la suppression du role.
+    if (keepRole === undefined) {
+      const role = await message.guild.roles.fetch(team.roleId);
+      await role.delete();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
-  await role.delete();
+  try {
+    const keepChannel = args.find((x) => x.toLowerCase() === '--keepchannel'); //Si --keepchannel est trouvé dans les arguments, on effectue pas la suppression du channel.
+    if (keepChannel === undefined) {
+      const channel = await message.guild.channels.fetch(team.channelId);
+      await channel.delete();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports.help = {
@@ -23,8 +48,13 @@ module.exports.help = {
   category: 'Organisateur',
   description: 'Désincrit une équipe et ses membres du tournois',
   usage: '<@nom_de_l_equipe>',
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {
+    '--keepchannel': "Conserve le channel de l'équipe",
+    '--keeprole': "Conserve le role de l'équipe",
+  },
+  canAdminMention: false,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: true,
 };

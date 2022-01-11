@@ -5,9 +5,7 @@ module.exports.run = async (client, message, args) => {
   const nbrTeams = await client.getSetting('nbr_teams');
 
   if (teams.length !== nbrTeams) {
-    return message.channel.send(
-      `Le nombre d'équipe pour générer les rencontres n'est pas suffisant: ${teams.length}/${nbrTeams}`
-    );
+    return message.channel.send(`Le nombre d'équipe pour générer les rencontres n'est pas suffisant: ${teams.length}/${nbrTeams}`);
   }
 
   //Boucle qui mélange un tableau (modifie le tableau d'origine)
@@ -18,15 +16,13 @@ module.exports.run = async (client, message, args) => {
     teams[j] = temp;
   }
 
-  //Ajout des rencontres
-  await client.addMeeting('8e1', teams[0].id, teams[1].id);
-  await client.addMeeting('8e2', teams[2].id, teams[3].id);
-  await client.addMeeting('8e3', teams[4].id, teams[5].id);
-  await client.addMeeting('8e4', teams[6].id, teams[7].id);
-  await client.addMeeting('8e5', teams[8].id, teams[9].id);
-  await client.addMeeting('8e6', teams[10].id, teams[11].id);
-  await client.addMeeting('8e7', teams[12].id, teams[13].id);
-  await client.addMeeting('8e8', teams[14].id, teams[15].id);
+  for (let i = 0; i < nbrTeams / 2; i++) {
+    //Création des channels
+    const channel = await message.guild.channels.create(`${teams[i * 2].name} vs ${teams[i * 2 + 1].name}`);
+
+    //Ajout des rencontres
+    await client.addMeeting(`8e${i + 1}`, channel.id, teams[i * 2].id, teams[i * 2 + 1].id);
+  }
 
   //Ajout des matchs
   const meetings = await client.getMeetings();
@@ -44,8 +40,10 @@ module.exports.help = {
   category: 'Organisateur',
   description: "Génère l'arbre initial grâce aux équipes enregistrées",
   usage: '',
-  adminMention: false,
-  permissions: true,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: true,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: false,
 };

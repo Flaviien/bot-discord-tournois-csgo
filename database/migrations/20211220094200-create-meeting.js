@@ -7,6 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING,
       },
+      channelId: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true,
+      },
       winner: {
         type: Sequelize.STRING,
       },

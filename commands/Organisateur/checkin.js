@@ -21,13 +21,20 @@ module.exports.run = async (client, message, args) => {
 
         for (const teamOfThisMeeting of teamsOfThisMeeting) {
           client.matches.set(teamOfThisMeeting.name, { matchId: match.matchId, checkin: 1 });
-
+          console.log(client.matches);
           setTimeout(async () => {
             if (client.matches.get(teamOfThisMeeting.name).checkin === 1) {
               client.matches.delete(teamOfThisMeeting.name);
-              console.log(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présenté à temps !`);
+
+              const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
+              channel.send(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
+              console.log(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
             }
-          }, 2000 /* 60000 * checkinTime */);
+            /* if (client.matches.get(teamOfThisMeeting.name).checkin === 2) {
+              client.matches.delete(teamOfThisMeeting.name);
+              console.log(`L'équipe ${teamOfThisMeeting.name} s'est bien présentée.`);
+            } */
+          }, 5000 /* 60000 * checkinTime */);
         }
 
         break;
@@ -46,8 +53,10 @@ module.exports.help = {
   category: 'Oragnisateur',
   description: 'Lance le checkin pour les matchs en paramètres',
   usage: '<id_du_match> <id_du_match>...',
-  adminMention: false,
-  permissions: true,
-  args: true,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: true,
+  isArgumentRequired: true,
+  needUserMention: false,
+  needRoleMention: false,
 };

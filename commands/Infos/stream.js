@@ -8,9 +8,7 @@ module.exports.run = async (client, message, args) => {
 
     if (typeof streams == 'object' && streams.length !== 0) {
       // Affiche les stream en cours.
-      const embed = new MessageEmbed()
-        .setColor('#C016FF')
-        .setTitle('Voici la liste des streams en cours:');
+      const embed = new MessageEmbed().setColor('#C016FF').setTitle('Voici la liste des streams en cours:');
 
       streams.forEach((stream) => {
         embed.addField(`${stream.name} :`, `${stream.url}`);
@@ -44,12 +42,13 @@ module.exports.help = {
   name: 'stream',
   aliases: ['stream'],
   category: 'Infos',
-  description:
-    "Permet d'afficher, d'ajouter, de modifier ou de retirer un stream en cours",
+  description: "Permet d'afficher, d'ajouter, de modifier ou de retirer un stream en cours",
   cooldown: 30,
   usage: '',
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: false,
 };

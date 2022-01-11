@@ -17,16 +17,19 @@ module.exports.help = {
   description: 'Répond pong et les latences du bot / API',
   cooldown: 10,
   usage: '',
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: false,
 };
 
 /*
 cooldown: 5 secondes par défaut
-adminMention: false, //false = On ne peux pas mentionner un Admin
-permissions: false, //true = Si l'utilisateur à la permission BAN_MEMBERS
-args: false, //true = Un argument au moins est requis
-mention: false //true = On doit mentionner quelqu'un (sauf un bot)
+canAdminMention: //si false = On ne peux pas mentionner un Admin
+isPermissionsRequired: //si true = commande uniquement disponible si l'utilisateur à la permission BAN_MEMBERS
+isArgumentRequired: //si true = Un argument au moins est requis
+needUserMention: //si true = On doit mentionner quelqu'un (sauf un bot)
+needRoleMention: //si true = On doit mentionner un role
 */

@@ -3,16 +3,24 @@ const Member = models.Member;
 
 module.exports = (client) => {
   client.getMember = async (memberName) => {
-    const member = await Member.findOne({ where: { name: memberName } });
-    return member;
+    try {
+      const member = await Member.findOne({ where: { name: memberName } });
+      return member;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  client.addMember = async (
-    teamName,
-    memberId,
-    memberName,
-    isLeader = false
-  ) => {
+  client.getMembers = async () => {
+    try {
+      const members = await Member.findAll();
+      return members;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  client.addMember = async (teamName, memberId, memberName, isLeader = false) => {
     const team = await client.getTeam(teamName);
     try {
       await Member.create({

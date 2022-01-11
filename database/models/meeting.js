@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-
+      channelId: DataTypes.STRING,
       winner: DataTypes.STRING,
       BO: DataTypes.TINYINT,
     },

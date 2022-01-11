@@ -1,15 +1,17 @@
 module.exports.run = async (client, message, args) => {
-  console.log(client.matches);
+  console.log('test');
 };
 
 module.exports.help = {
   name: 'test',
   aliases: ['test'],
   category: 'Divers',
-  description: 'Test pour le developement',
+  description: 'Help for development',
   usage: '',
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: true,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: true,
 };

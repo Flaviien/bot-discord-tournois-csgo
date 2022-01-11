@@ -22,31 +22,38 @@ module.exports = async (client, message) => {
   const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.help.aliases && cmd.help.aliases.includes(commandName));
   if (!command) return;
 
-  if (command.help.permissions && !message.member.permissions.has('BAN_MEMBERS')) {
+  if (command.help.isPermissionsRequired && !message.member.permissions.has('BAN_MEMBERS')) {
     //Si l'utilisateur n'a pas les droits
     return message.reply("Tu n'a pas les permissions pour taper cette commande !");
   }
 
-  if (command.help.args && !args.length) {
+  if (command.help.isArgumentRequired && !args.length) {
     //Si la commande n'a pas d'argmument, alors qu'elle en necessite au moins un. (args = true)
     let noArgsReply = `Votre commande est incomplète, ${message.author} !`;
     if (command.help.usage) {
-      //Si on est ici, c'est que l'utilisateurs à oublié le/les argument(s). Donc on va lui préciser comment utiliser la commande.
+      //Si on est ici, c'est que l'utilisateur a oublié le/les argument(s). Donc on va lui préciser comment utiliser la commande.
       noArgsReply += `\nVoici comment utiliser la commande: ${prefix}${command.help.name} ${command.help.usage}`;
     }
     return message.channel.send(noArgsReply);
   }
 
-  if (command.help.mention) {
+  if (command.help.needUserMention) {
     let user = message.mentions.users.first();
 
     if (user === undefined) return message.reply('Il faut mentionner un utilisateur.');
     if (user.bot) return message.reply('Vous ne pouvez pas mentionner un bot.');
 
-    if (!command.help.adminMention && message.guild.member(user).permissions.has('BAN_MEMBERS')) {
+    if (!command.help.canAdminMention && message.guild.members.cache.get(user.id).permissions.has('BAN_MEMBERS')) {
       //Si la cible de la commande est un admin/modo
       return message.reply('Tu ne peux pas utiliser cette commande sur cette utilisateur.');
     }
+  }
+
+  if (command.help.needRoleMention) {
+    let role = message.mentions.roles.first();
+
+    if (role === undefined) return message.reply('Il faut mentionner un role.');
+    if (!role.mentionable) return message.reply('Vous ne pouvez pas mentionner ce role');
   }
 
   if (!client.cooldowns.has(command.help.name)) {

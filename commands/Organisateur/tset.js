@@ -54,8 +54,10 @@ module.exports.help = {
     checkin <minutes>: Modifie le timer du checkin, en minute.\n
     nbr_teams <number>: Modifie le nombre d'équipe qui vont participer au tournois\n
     `,
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: false,
 };

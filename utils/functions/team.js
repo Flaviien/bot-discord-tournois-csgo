@@ -27,12 +27,11 @@ module.exports = (client) => {
     }
   };
 
-  client.addTeam = async (teamName, teamRole, teamChannel) => {
+  client.addTeam = async (teamName, teamRole) => {
     try {
       await Team.create({
         name: teamName,
         roleId: teamRole,
-        channelId: teamChannel,
       });
       return "L'équipe a été créée";
     } catch (error) {
@@ -40,14 +39,12 @@ module.exports = (client) => {
     }
   };
 
-  client.removeTeam = async (teamMention) => {
+  client.removeTeam = async (roleId) => {
     try {
-      teamRoleId = teamMention.match(/\d+/g).join('');
-      const team = await Team.findOne({ where: { roleId: teamRoleId } });
-      // Inutile, car les membres sont supprimés en cascade:
-      // await client.removeMembers(team);
+      const team = await Team.findOne({ where: { roleId } });
+      // Les membres sont supprimés en cascade
       await team.destroy();
-      return teamRoleId;
+      return team;
     } catch (error) {
       console.log(error);
     }

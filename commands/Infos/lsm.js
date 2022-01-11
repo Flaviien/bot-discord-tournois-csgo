@@ -4,9 +4,7 @@ module.exports.run = async (client, message, args) => {
   if (args.length === 0) {
     const meetings = await client.getMeetings();
 
-    const embed = new MessageEmbed()
-      .setColor('#36393F')
-      .setTitle('Voici la liste de tous les matchs du tournoi:');
+    const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste de tous les matchs du tournoi:');
 
     for (const meeting of meetings) {
       const teams = await meeting.getTeams();
@@ -20,12 +18,7 @@ module.exports.run = async (client, message, args) => {
         return matchList;
       };
 
-      embed.addField(
-        `${teams[0].name} vs ${teams[1].name} ${
-          meeting.BO > 1 ? ` - BO${meeting.BO}` : ''
-        } `,
-        matchDetails()
-      );
+      embed.addField(`${teams[0].name} vs ${teams[1].name} ${meeting.BO > 1 ? ` - BO${meeting.BO}` : ''} `, matchDetails());
     }
     message.channel.send({ embeds: [embed] });
   }
@@ -38,12 +31,13 @@ module.exports.help = {
   name: 'lsm',
   aliases: ['lsm'],
   category: 'Infos',
-  description:
-    'Retourne la liste des matchs ou retourne les détails du match en paramètre',
+  description: 'Retourne la liste des matchs ou retourne les détails du match en paramètre',
   cooldown: 2,
   usage: '',
-  adminMention: false,
-  permissions: false,
-  args: false,
-  mention: false,
+  options: {},
+  canAdminMention: false,
+  isPermissionsRequired: false,
+  isArgumentRequired: false,
+  needUserMention: false,
+  needRoleMention: false,
 };
