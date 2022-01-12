@@ -28,13 +28,12 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.help = {
-  name: 'lsm',
-  aliases: ['lsm'],
+  name: 'infomatches',
+  aliases: ['infomatches', 'im'],
   category: 'Infos',
   description: 'Retourne la liste des matchs ou retourne les détails du match en paramètre',
-  cooldown: 2,
+  cooldown: 30,
   usage: '',
-  options: {},
   canAdminMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,

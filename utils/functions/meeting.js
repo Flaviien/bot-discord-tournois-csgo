@@ -31,7 +31,7 @@ module.exports = (client) => {
     }
   };
 
-  /* client.removeMeetings = async () => {
+  client.removeMeetings = async () => {
     try {
       const meetings = await Meeting.findAll();
       meetings.forEach(async (meeting) => {
@@ -40,5 +40,5 @@ module.exports = (client) => {
     } catch (error) {
       console.log(error);
     }
-  }; */
+  };
 };

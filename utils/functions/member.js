@@ -11,6 +11,22 @@ module.exports = (client) => {
     }
   };
 
+  /* client.getMember = async (memberName = null, memberId = null) => {
+    //By Name or by Id
+    try {
+      if (teamName !== null) {
+        const member = await Member.findOne({ where: { name: memberName } });
+        return member;
+      }
+      if (teamId !== null) {
+        const member = await Member.findOne({ where: { name: memberId } });
+        return member;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
+
   client.getMembers = async () => {
     try {
       const members = await Member.findAll();
@@ -21,8 +37,9 @@ module.exports = (client) => {
   };
 
   client.addMember = async (teamName, memberId, memberName, isLeader = false) => {
-    const team = await client.getTeam(teamName);
     try {
+      const team = await client.getTeam(teamName);
+
       await Member.create({
         memberId: memberId,
         name: memberName,
@@ -34,7 +51,15 @@ module.exports = (client) => {
     }
   };
 
-  // Inutile pour le moment
+  client.removeMember = async (memberId) => {
+    try {
+      const member = await Member.findOne({ where: { memberId } });
+      member.destroy();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   /* client.removeMembers = async (team) => { 
     const members = await Member.findAll({ where: { teams_id: team.id } });
     members.forEach(async (member) => {

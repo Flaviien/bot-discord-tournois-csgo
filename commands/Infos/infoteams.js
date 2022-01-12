@@ -23,13 +23,12 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.help = {
-  name: 'lst',
-  aliases: ['lst'],
+  name: 'infoteams',
+  aliases: ['infoteams', 'it'],
   category: 'Infos',
   description: "Retourne la liste des équipes ou retourne les détails de l'équipe en paramètre",
   cooldown: 30,
   usage: '',
-  options: {},
   canAdminMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,

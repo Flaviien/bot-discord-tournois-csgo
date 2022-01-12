@@ -53,7 +53,6 @@ module.exports.help = {
   category: 'Oragnisateur',
   description: 'Lance le checkin pour les matchs en paramètres',
   usage: '<id_du_match> <id_du_match>...',
-  options: {},
   canAdminMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,

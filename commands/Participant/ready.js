@@ -23,7 +23,6 @@ module.exports.help = {
   description: 'Permet à une équipe de valider son checkin',
   cooldown: 0,
   usage: '',
-  options: {},
   canAdminMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,

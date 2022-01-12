@@ -10,6 +10,7 @@ module.exports = {
           model: 'Meetings',
           key: 'meetingId',
         },
+        onDelete: 'CASCADE',
       },
       teams_id: {
         type: Sequelize.INTEGER,
@@ -19,6 +20,7 @@ module.exports = {
           model: 'Teams',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

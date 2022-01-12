@@ -22,15 +22,15 @@ module.exports.run = async (client, message, args) => {
     const name = args[1];
     const url = args[2];
 
-    client.addStream(name, url);
+    message.channel.send(await client.addStream(name, url));
   }
 
-  if (args[0] === 'update') {
+  /* if (args[0] === 'update') {
     const name = args[1];
     const url = args[2];
 
     message.channel.send(await client.updateStream(name, url));
-  }
+  } */
 
   if (args[0] === 'remove') {
     const name = args[1];
@@ -41,13 +41,13 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'stream',
   aliases: ['stream'],
-  category: 'Infos',
-  description: "Permet d'afficher, d'ajouter, de modifier ou de retirer un stream en cours",
-  cooldown: 30,
-  usage: '',
-  options: {},
+  category: 'Organisteur',
+  description: "Permet d'ajouter ou de retirer un stream à la liste des streams en cours",
+  usage: `+ \n
+  <add> <nom_du_streamer> <url>\n
+  <remove> <nom_du_streamer>`,
   canAdminMention: false,
-  isPermissionsRequired: false,
+  isPermissionsRequired: true,
   isArgumentRequired: false,
   needUserMention: false,
   needRoleMention: false,

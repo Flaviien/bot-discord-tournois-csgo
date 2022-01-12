@@ -53,7 +53,6 @@ module.exports.help = {
   category: 'Divers',
   description: 'Renvoie une liste de commandes ou les informations sur une commande',
   usage: '<command_name>',
-  options: {},
   canAdminMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,

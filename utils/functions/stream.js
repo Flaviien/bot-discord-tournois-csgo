@@ -17,7 +17,7 @@ module.exports = (client) => {
     }
   };
 
-  client.updateStream = async (name, url) => {
+  /* client.updateStream = async (name, url) => {
     try {
       const stream = await Stream.findOne({ where: { name } });
       await stream.update({ name, url });
@@ -25,7 +25,7 @@ module.exports = (client) => {
     } catch (error) {
       return "L'utilisateur n'a pas été trouvé, le stream n'a pas été modifié";
     }
-  };
+  }; */
 
   client.removeStream = async (name) => {
     try {

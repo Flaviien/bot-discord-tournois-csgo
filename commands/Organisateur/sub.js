@@ -58,6 +58,7 @@ module.exports.run = async (client, message, args) => {
     const role = await message.guild.roles.create({
       name: `${teamName}`,
       color: 'RANDOM',
+      mentionable: true,
     });
 
     await client.addTeam(teamName, role.id);
@@ -77,9 +78,7 @@ module.exports.help = {
   aliases: ['sub'],
   category: 'Organisateur',
   description: 'Enregistre une équipe et les membres correspondant',
-  usage: '<nom_de_l_equipe> <@nom_du_capitaine> <@nom_des_joueurs>*4',
-
-  options: {},
+  usage: '<nom_de_l_equipe> <@capitaine> <@joueur> <@joueur> ...',
   canAdminMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,
