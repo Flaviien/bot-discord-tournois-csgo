@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Match.belongsTo(models.Meeting, {
         foreignKey: 'meetings_id',
       });
+      Match.belongsTo(models.Map, {
+        foreignKey: 'maps_id',
+      });
     }
   }
   Match.init(
@@ -19,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      isIngame: DataTypes.BOOLEAN,
+      status: DataTypes.STRING,
       winner: DataTypes.STRING,
       score: DataTypes.STRING,
       maps_id: DataTypes.INTEGER,

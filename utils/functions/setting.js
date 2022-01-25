@@ -25,13 +25,18 @@ module.exports = (client) => {
   client.updatePermission = async (isPermissionString) => {
     try {
       const permission = await Setting.findOne({
-        where: { name: 'permission' },
+        where: { name: 'permissions' },
       });
       let boolValue;
       if (/true/i.test(isPermissionString)) boolValue = true;
       if (/false/i.test(isPermissionString)) boolValue = false;
-      await permission.update({ key_int: boolValue ? 1 : 0 });
-      return 'La permission a été modifiée';
+      if (boolValue) {
+        await permission.update({ key_int: 1 });
+        return 'Les participants ont désormais accès aux commandes';
+      } else {
+        await permission.update({ key_int: 0 });
+        return "Les participants n'ont désormais plus accès aux commandes";
+      }
     } catch (error) {
       return "Erreur, la permission n'a pas été modifiée";
     }

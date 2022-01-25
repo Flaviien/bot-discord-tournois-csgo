@@ -1,7 +1,7 @@
 module.exports.run = async (client, message, args) => {
-  const resetAll = args.find((x) => x.toLowerCase() === '--reset-all');
+  const resetAll = args.find((x) => x.toLowerCase() === '--all');
   const resetMeetings = args.find((x) => x.toLowerCase() === '--matches');
-  const meetings = await client.getMeetings();
+  const meetings = (await client.getMeetings()) || [];
 
   const delChannels = async () => {
     const channels = await message.guild.channels.fetch();
@@ -15,20 +15,20 @@ module.exports.run = async (client, message, args) => {
   };
 
   if (resetAll !== undefined) {
-    const teams = await client.getTeams();
+    const teams = (await client.getTeams()) || [];
     const roles = await message.guild.roles.fetch();
 
     for (const team of teams) {
       roles.forEach((role) => {
         if (role.id === team.roleId) {
-          role.delete(role.id);
+          role.delete();
         }
       });
     }
 
     delChannels();
     await client.removeTeams();
-    //Les mettings sont supprimés en cascade.
+    await client.removeMeetings();
     /* if () {
       await message.channel.send('Les équipes et les matchs en cours ont été supprimés.');
     } else {

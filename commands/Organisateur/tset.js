@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(await client.updatePrefix(args[1]));
   }
 
-  if (setting === 'permission') {
+  if (setting === 'perm' || setting === 'permission') {
     if (args[1] !== 'true' && args[1] !== 'false') return;
     message.channel.send(await client.updatePermission(args[1]));
   }

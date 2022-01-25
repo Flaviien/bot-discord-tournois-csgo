@@ -1,11 +1,13 @@
 module.exports.run = async (client, message, args) => {
   /*
   Verification du nombre d'équipes présentes.
-  Update le statut du checkin, pour chaque matchs en argument, dans la DB.
+  Update le statut du checkin, pour chaque matchs en argument, dans une collection attachée au client.
   Lance un timer (15min par défaut), qui vérifie si les équipes ce sont présentées.
   */
+  const prefix = await client.getSetting('prefix');
   const teams = await client.getTeams();
   const nbrTeams = await client.getSetting('nbr_teams');
+  const checkinTime = await client.getSetting('checkin_time');
 
   if (teams.length !== nbrTeams) {
     return message.channel.send(`Le nombre d'équipe pour lancer les checkins n'est pas suffisant: ${teams.length}/${nbrTeams}`);
@@ -17,16 +19,17 @@ module.exports.run = async (client, message, args) => {
     for (const [y, match] of matches.entries()) {
       if (match.matchId === arg) {
         const meetingOfThisMatch = await match.getMeeting();
+        const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
         const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
+
+        channel.send(`${teamsOfThisMeeting[0].name} & ${teamsOfThisMeeting[1].name}, merci de vous présenter en tappant la commande ***${prefix}ready***`);
 
         for (const teamOfThisMeeting of teamsOfThisMeeting) {
           client.matches.set(teamOfThisMeeting.name, { matchId: match.matchId, checkin: 1 });
-          console.log(client.matches);
           setTimeout(async () => {
             if (client.matches.get(teamOfThisMeeting.name).checkin === 1) {
               client.matches.delete(teamOfThisMeeting.name);
 
-              const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
               channel.send(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
               console.log(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
             }
@@ -34,7 +37,7 @@ module.exports.run = async (client, message, args) => {
               client.matches.delete(teamOfThisMeeting.name);
               console.log(`L'équipe ${teamOfThisMeeting.name} s'est bien présentée.`);
             } */
-          }, 5000 /* 60000 * checkinTime */);
+          }, 60000 * checkinTime);
         }
 
         break;

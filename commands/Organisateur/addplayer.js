@@ -1,9 +1,7 @@
-const member = require('../../utils/functions/member');
-
 module.exports.run = async (client, message, args) => {
   const teamMention = message.mentions.roles.first();
   const membersMention = message.mentions.members;
-  const team = await client.getTeam(teamMention.name);
+  const team = await client.getTeam('name', teamMention.name);
 
   /* Test si l'équipe existe*/
   if (team === undefined || team === null) {

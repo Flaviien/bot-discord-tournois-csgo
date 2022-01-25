@@ -38,7 +38,7 @@ module.exports = (client) => {
 
   client.addMember = async (teamName, memberId, memberName, isLeader = false) => {
     try {
-      const team = await client.getTeam(teamName);
+      const team = await client.getTeam('name', teamName);
 
       await Member.create({
         memberId: memberId,

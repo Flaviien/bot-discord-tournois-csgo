@@ -16,10 +16,9 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
-      isIngame: {
+      status: {
         allowNull: false,
-        type: Sequelize.TINYINT,
-        defaultValue: 0,
+        type: Sequelize.STRING,
       },
       winner: {
         type: Sequelize.STRING,
@@ -29,6 +28,10 @@ module.exports = {
       },
       maps_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Maps',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,

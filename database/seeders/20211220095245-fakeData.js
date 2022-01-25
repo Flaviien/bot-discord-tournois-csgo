@@ -36,7 +36,7 @@ module.exports = {
         name: 'overpass',
       },
       {
-        name: 'dust II',
+        name: 'dust2',
       },
       {
         name: 'vertigo',

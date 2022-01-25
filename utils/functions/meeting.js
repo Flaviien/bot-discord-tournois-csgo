@@ -32,6 +32,7 @@ module.exports = (client) => {
   };
 
   client.removeMeetings = async () => {
+    //Les matchs sont supprimés en cascade.
     try {
       const meetings = await Meeting.findAll();
       meetings.forEach(async (meeting) => {

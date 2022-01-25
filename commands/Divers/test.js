@@ -1,5 +1,5 @@
 module.exports.run = async (client, message, args) => {
-  console.log('test');
+  console.log(client.matches);
 };
 
 module.exports.help = {
@@ -12,5 +12,5 @@ module.exports.help = {
   isPermissionsRequired: true,
   isArgumentRequired: false,
   needUserMention: false,
-  needRoleMention: true,
+  needRoleMention: false,
 };

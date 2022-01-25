@@ -10,32 +10,34 @@ module.exports.run = async (client, message, args) => {
   const meetings = await client.getMeetings();
   if (meetings.length !== 0) {
     return message.channel.send(
-      `Le tournoi est en cours, vous ne pouvez pas supprimer les équipes. Essayez plutôt la commande ${await client.getSetting('prefix')}ff <@nom_de_l_equipe>`
+      `Le tournoi est en cours, vous ne pouvez pas supprimer les équipes. Essayez plutôt la commande ***${await client.getSetting(
+        'prefix'
+      )}ff <@nom_de_l_equipe>***`
     );
   }
 
   try {
     const teamMention = message.mentions.roles;
     const team = await client.removeTeam(teamMention.firstKey());
-  } catch (error) {
-    console.log(error);
-  }
 
-  try {
-    const keepRole = args.find((x) => x.toLowerCase() === '--keeprole'); //Si --keeprole est trouvé dans les arguments, on effectue pas la suppression du role.
-    if (keepRole === undefined) {
-      const role = await message.guild.roles.fetch(team.roleId);
-      await role.delete();
+    try {
+      const keepRole = args.find((x) => x.toLowerCase() === '--keeprole'); //Si --keeprole est trouvé dans les arguments, on effectue pas la suppression du role.
+      if (keepRole === undefined) {
+        const role = await message.guild.roles.fetch(team.roleId);
+        await role.delete();
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
 
-  try {
-    const keepChannel = args.find((x) => x.toLowerCase() === '--keepchannel'); //Si --keepchannel est trouvé dans les arguments, on effectue pas la suppression du channel.
-    if (keepChannel === undefined) {
-      const channel = await message.guild.channels.fetch(team.channelId);
-      await channel.delete();
+    try {
+      const keepChannel = args.find((x) => x.toLowerCase() === '--keepchannel'); //Si --keepchannel est trouvé dans les arguments, on effectue pas la suppression du channel.
+      if (keepChannel === undefined) {
+        const channel = await message.guild.channels.fetch(team.channelId);
+        await channel.delete();
+      }
+    } catch (error) {
+      console.log(error);
     }
   } catch (error) {
     console.log(error);

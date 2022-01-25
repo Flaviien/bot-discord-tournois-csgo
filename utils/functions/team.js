@@ -2,17 +2,11 @@ const models = require('../../database/models/index.js');
 const Team = models.Team;
 
 module.exports = (client) => {
-  client.getTeam = async (teamName = null, teamId = null) => {
-    //By Name or by Id
+  client.getTeam = async (key, value) => {
+    //By Name, by Id or by role
     try {
-      if (teamName !== null) {
-        const team = await Team.findOne({ where: { name: teamName } });
-        return team;
-      }
-      if (teamId !== null) {
-        const team = await Team.findOne({ where: { id: teamId } });
-        return team;
-      }
+      const team = await Team.findOne({ where: { [key]: value } });
+      return team;
     } catch (error) {
       console.log(error);
     }
