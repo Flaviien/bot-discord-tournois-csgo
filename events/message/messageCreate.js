@@ -38,7 +38,7 @@ module.exports = async (client, message) => {
   }
 
   if (command.help.needUserMention) {
-    let user = message.mentions.users.first();
+    const user = message.mentions.users.first();
 
     if (user === undefined) return message.reply('Il faut mentionner un utilisateur.');
     if (user.bot) return message.reply('Vous ne pouvez pas mentionner un bot.');
@@ -50,10 +50,14 @@ module.exports = async (client, message) => {
   }
 
   if (command.help.needRoleMention) {
-    let role = message.mentions.roles.first();
+    const roles = message.mentions.roles;
+    if (roles.size === 0) return message.reply('Il faut mentionner un role.');
 
-    if (role === undefined) return message.reply('Il faut mentionner un role.');
-    if (!role.mentionable) return message.reply('Vous ne pouvez pas mentionner ce role');
+    for (const role of roles.values()) {
+      if (!role.mentionable) {
+        return message.reply(`Vous ne pouvez pas mentionner le role ${role.name}`);
+      }
+    }
   }
 
   if (!client.cooldowns.has(command.help.name)) {

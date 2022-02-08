@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
     return regex.test(input);
   }
 
-  /* if (match.maps_id === null) {
+  if (match.maps_id === null) {
     return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${prefix}setmap***.`);
   }
 
@@ -46,7 +46,7 @@ module.exports.run = async (client, message, args) => {
 
   if (found === undefined) {
     return message.channel.send(`L'équipe que vous avez mentionné ne participe pas à ce match`);
-  } */
+  }
 
   await client.updateMatch(matchId, 'status', 'over');
   await client.updateMatch(matchId, 'winner', winnerMention.name);

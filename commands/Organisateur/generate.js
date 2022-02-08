@@ -40,10 +40,10 @@ module.exports.run = async (client, message, args) => {
       embed.addField(`${prefix}${command.help.aliases.join(`, ${prefix}`)}`, `${command.help.description}`);
     });
 
-    channel.send({ embeds: [embed] });
-
     //Ajout des rencontres
     await client.addMeeting(`8e${i + 1}`, channel.id, teams[i * 2].id, teams[i * 2 + 1].id);
+
+    channel.send({ embeds: [embed] });
   }
 
   meetings = await client.getMeetings();

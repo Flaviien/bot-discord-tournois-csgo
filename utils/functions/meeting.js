@@ -23,9 +23,10 @@ module.exports = (client) => {
 
   client.addMeeting = async (meetingId, channelId, teams_id_1, teams_id_2) => {
     try {
-      await Meeting.create({ meetingId, channelId, BO: await client.getSetting('default_BO') });
+      const meeting = await Meeting.create({ meetingId, channelId, BO: await client.getSetting('default_BO') });
       await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_1 });
       await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_2 });
+      return meeting;
     } catch (error) {
       console.log(error);
     }
