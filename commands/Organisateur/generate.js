@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args) => {
   if (meetings.length > 0) {
     return message.channel.send(
       `Des matchs sont déjà programmés.\n
-      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${prefix}reset*** en indiquant l'option appropriée ***(--reset-all ou --reset-matches)***.`
+      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
     );
   }
 

@@ -55,7 +55,7 @@ module.exports.help = {
   aliases: ['creatematch', 'cm'],
   category: 'Organisateur',
   description: "Pour créer les matchs de l'arbre initial manuellement",
-  usage: '',
+  usage: '<@équipe 1> <@équipe 2>',
   canAdminMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,

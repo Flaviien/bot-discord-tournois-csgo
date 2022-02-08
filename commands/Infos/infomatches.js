@@ -1,28 +1,31 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
-  if (args.length === 0) {
+  const adminVue = args.find((x) => x.toLowerCase() === '--admin');
+
+  if (args.length === 0 || adminVue !== undefined) {
     const meetings = await client.getMeetings();
     const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste de tous les matchs du tournoi:');
 
     const matchDetails = async (meeting, matches) => {
       let matchList = ``;
-      for (let i = 0; i < meeting.BO; i++) {
+      for (let i = 0; i < matches.length; i++) {
         const matchId = matches[i].matchId;
         const mapNumber = matchId.charAt(matchId.length - 1);
-        console.log(matches[i].status);
 
         if (matches[i].status === 'waiting') {
-          matchList += `${i > 0 ? '\n' : ''} Map ${mapNumber} - Match en attente`;
+          matchList += `${i > 0 ? '\n' : ''}${adminVue !== undefined ? matchId + ' -' : ''} Map ${mapNumber} - Match en attente`;
           break;
         }
         if (matches[i].status === 'playing') {
           const maps = await matches[i].getMap();
-          matchList += `${i > 0 ? '\n' : ''}  Map ${mapNumber} : **${maps.name}** - Match en cours`;
+          matchList += `${i > 0 ? '\n' : ''}${adminVue !== undefined ? matchId + ' -' : ''}  Map ${mapNumber} : **${maps.name}** - Match en cours`;
         }
         if (matches[i].status === 'over') {
           const maps = await matches[i].getMap();
-          matchList += `${i > 0 ? '\n' : ''} Map ${mapNumber} : **${maps.name}** - Score : **${matches[i].score}** - Gagnant : **${matches[i].winner}**`;
+          matchList += `${i > 0 ? '\n' : ''}${adminVue !== undefined ? matchId + ' -' : ''}  Map ${mapNumber} : **${maps.name}** - Score : **${
+            matches[i].score
+          }** - Gagnant : **${matches[i].winner}**`;
         }
       }
       return matchList;

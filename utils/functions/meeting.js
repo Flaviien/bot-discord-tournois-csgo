@@ -12,6 +12,15 @@ module.exports = (client) => {
     }
   }; */
 
+  client.getMeeting = async (meetingId) => {
+    try {
+      const meeting = await Meeting.findOne({ where: { meetingId } });
+      return meeting;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   client.getMeetings = async () => {
     try {
       const meetings = await Meeting.findAll();
@@ -27,6 +36,15 @@ module.exports = (client) => {
       await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_1 });
       await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_2 });
       return meeting;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  client.updateMeeting = async (meetingId, key, value) => {
+    try {
+      const meeting = await client.getMeeting(meetingId);
+      await meeting.update({ [key]: value });
     } catch (error) {
       console.log(error);
     }

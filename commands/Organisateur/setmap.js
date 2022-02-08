@@ -2,6 +2,9 @@ module.exports.run = async (client, message, args) => {
   const prefix = await client.getSetting('prefix');
   const matchId = args[0];
   const match = (await client.getMatch(matchId)) || [];
+  if (match.length === 0) {
+    return message.channel.send(`Veuillez définir les matchs du tournoi`);
+  }
   const meetingOfThisMatch = await match.getMeeting();
   const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
   const mapsModel = await client.getMaps();
@@ -28,7 +31,7 @@ module.exports.run = async (client, message, args) => {
     await client.updateMatch(matchId, 'status', 'playing');
     await client.updateMatch(matchId, 'maps_id', mapModel.id);
 
-    channel.send(`La map n°${matchId.charAt(matchId.length - 1)} a été défini sur ${mapName}`);
+    channel.send(`La **map n°${matchId.charAt(matchId.length - 1)}** a été défini sur **${mapName}**`);
   }
 };
 

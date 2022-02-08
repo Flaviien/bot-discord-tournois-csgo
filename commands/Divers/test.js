@@ -1,5 +1,5 @@
 module.exports.run = async (client, message, args) => {
-  console.log(client.matches);
+  await client.updateMeeting('8e1', 'winner', 'BIG');
 };
 
 module.exports.help = {

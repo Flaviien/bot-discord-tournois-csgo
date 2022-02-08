@@ -36,4 +36,13 @@ module.exports = (client) => {
       console.log(error);
     }
   };
+
+  client.removeMatch = async (matchId) => {
+    try {
+      const match = await client.getMatch(matchId);
+      await match.destroy();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
