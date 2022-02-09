@@ -30,7 +30,10 @@ module.exports.run = async (client, message, args) => {
   if (teams.length === 2) {
     const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
     const prefix = await client.getSetting('prefix');
-    const channel = await message.guild.channels.create(`8eme-${teams[0].name} vs ${teams[1].name}`);
+    const nbrTeams = await client.getSetting('nbr_teams');
+    const channel = await message.guild.channels.create(`${nbrTeams / 2}eme-${teams[0].name} vs ${teams[1].name}`, {
+      parent: client.config.CATEGORIES_CHANNELS_ID.stage8,
+    });
     const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
 
     commands.forEach((command) => {
@@ -39,7 +42,7 @@ module.exports.run = async (client, message, args) => {
 
     //Ajout des rencontres
     const meetings = (await client.getMeetings()) || [];
-    const meeting = await client.addMeeting(`8e${meetings.length + 1}`, channel.id, teams[0].id, teams[1].id);
+    const meeting = await client.addMeeting(`${nbrTeams / 2}e${meetings.length + 1}`, channel.id, teams[0].id, teams[1].id);
 
     channel.send({ embeds: [embed] });
 

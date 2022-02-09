@@ -32,7 +32,9 @@ module.exports.run = async (client, message, args) => {
 
   for (let i = 0; i < nbrTeams / 2; i++) {
     //Création des channels
-    const channel = await message.guild.channels.create(`8eme-${teams[i * 2].name} vs ${teams[i * 2 + 1].name}`);
+    const channel = await message.guild.channels.create(`${nbrTeams / 2}eme-${teams[i * 2].name} vs ${teams[i * 2 + 1].name}`, {
+      parent: client.config.CATEGORIES_CHANNELS_ID.stage8,
+    });
 
     const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
 
@@ -41,7 +43,7 @@ module.exports.run = async (client, message, args) => {
     });
 
     //Ajout des rencontres
-    await client.addMeeting(`8e${i + 1}`, channel.id, teams[i * 2].id, teams[i * 2 + 1].id);
+    await client.addMeeting(`${nbrTeams / 2}e${i + 1}`, channel.id, teams[i * 2].id, teams[i * 2 + 1].id);
 
     channel.send({ embeds: [embed] });
   }

@@ -1,6 +1,4 @@
-module.exports.run = async (client, message, args) => {
-  await client.updateMeeting('8e1', 'winner', 'BIG');
-};
+module.exports.run = async (client, message, args) => {};
 
 module.exports.help = {
   name: 'test',

@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports.run = async (client, message, args) => {
   const prefix = await client.getSetting('prefix');
   const matchId = args[0];
@@ -5,7 +7,7 @@ module.exports.run = async (client, message, args) => {
   if (match.length === 0) {
     return message.channel.send(`Ce match n'existe pas.`);
   }
-  const meetingOfThisMatch = await match.getMeeting();
+  let meetingOfThisMatch = await match.getMeeting();
   const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
   const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
   const winnerMention = message.mentions.roles.first();
@@ -16,7 +18,7 @@ module.exports.run = async (client, message, args) => {
     return regex.test(input);
   }
 
-  if (match.maps_id === null) {
+  /* if (match.maps_id === null) {
     return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${prefix}setmap***.`);
   }
 
@@ -46,12 +48,13 @@ module.exports.run = async (client, message, args) => {
 
   if (found === undefined) {
     return message.channel.send(`L'équipe que vous avez mentionné ne participe pas à ce match`);
-  }
+  } */
 
   await client.updateMatch(matchId, 'status', 'over');
   await client.updateMatch(matchId, 'score', score);
   await client.updateMatch(matchId, 'winner', winnerMention.name);
 
+  //Condition qui définie le gagnant du meeting.
   if (meetingOfThisMatch.BO === 1) {
     await client.updateMeeting(meetingOfThisMatch.meetingId, 'winner', winnerMention.name);
   } else if (meetingOfThisMatch.BO === 3 || meetingOfThisMatch.BO === 5) {
@@ -74,11 +77,68 @@ module.exports.run = async (client, message, args) => {
       }
     }
   }
+
   channel.send(
     `Le score de la **map n°${matchId.charAt(matchId.length - 1)}** du match **${teamsOfThisMeeting[0].name} vs ${
       teamsOfThisMeeting[1].name
     }** a été défini sur **${score}**. Le gagnant est **${winnerMention.name}**`
   );
+
+  //Création de la prochaine étape du tournois
+  meetingOfThisMatch = await match.getMeeting();
+  const meetingId = meetingOfThisMatch.meetingId;
+  if (meetingOfThisMatch.winnner !== null) {
+    const lastCharOfMeeting = parseInt(meetingId.charAt(meetingId.length - 1));
+    let secondMeeting;
+    if (lastCharOfMeeting % 2 === 0) {
+      //pair
+      secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting - 1}`);
+    } else {
+      //impair
+      secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting + 1}`);
+    }
+    if (secondMeeting.winner !== null) {
+      const meetings = (await client.getMeetings()) || [];
+      const team1 = await client.getTeam('name', meetingOfThisMatch.winner);
+      const team2 = await client.getTeam('name', secondMeeting.winner);
+      const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
+      const prefix = await client.getSetting('prefix');
+      let channel;
+      const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
+      commands.forEach((command) => {
+        embed.addField(`${prefix}${command.help.aliases.join(`, ${prefix}`)}`, `${command.help.description}`);
+      });
+
+      if (meetingId.charAt(0) === '8') {
+        const numberOfMeetingOfThisStage = meetings.filter((m) => m.meetingId.charAt(0) === '4').length;
+        channel = await message.guild.channels.create(`Quart-${team1.name} vs ${team2.name}`, { parent: client.config.CATEGORIES_CHANNELS_ID.stage4 });
+        const meeting = await client.addMeeting(`4e${numberOfMeetingOfThisStage + 1}`, channel.id, team1.id, team2.id);
+        //Ajout des matchs
+        for (let i = 1; i <= meeting.BO; i++) {
+          await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
+        }
+      }
+      if (meetingId.charAt(0) === '4') {
+        const numberOfMeetingOfThisStage = meetings.filter((m) => m.meetingId.charAt(0) === '2').length;
+        channel = await message.guild.channels.create(`Demi-finale-${team1.name} vs ${team2.name}`, { parent: client.config.CATEGORIES_CHANNELS_ID.stage2 });
+        const meeting = await client.addMeeting(`2e${numberOfMeetingOfThisStage + 1}`, channel.id, team1.id, team2.id);
+        //Ajout des matchs
+        for (let i = 1; i <= meeting.BO; i++) {
+          await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
+        }
+      }
+      if (meetingId.charAt(0) === '2') {
+        channel = await message.guild.channels.create(`Finale-${team1.name} vs ${team2.name}`, { parent: client.config.CATEGORIES_CHANNELS_ID.stage1 });
+        const meeting = await client.addMeeting(`1e1`, channel.id, team1.id, team2.id);
+        //Ajout des matchs
+        for (let i = 1; i <= meeting.BO; i++) {
+          await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
+        }
+      }
+
+      channel.send({ embeds: [embed] });
+    }
+  }
 };
 
 module.exports.help = {

@@ -1,6 +1,7 @@
 const models = require('../../database/models/index.js');
 const Meeting = models.Meeting;
 const MeetingTeams = models.MeetingTeams;
+const { Op } = require('sequelize');
 
 module.exports = (client) => {
   /* client.getMeetingTeams = async (meetings_id) => {
