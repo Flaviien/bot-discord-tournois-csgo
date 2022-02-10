@@ -1,17 +1,18 @@
 module.exports.run = async (client, message, args) => {
   const resetAll = args.find((x) => x.toLowerCase() === '--all');
   const resetMeetings = args.find((x) => x.toLowerCase() === '--matches');
+  const resetScores = args.find((x) => x.toLowerCase() === '--scores');
   const meetings = (await client.getMeetings()) || [];
 
   const delChannels = async () => {
     const channels = await message.guild.channels.fetch();
-    meetings.forEach((meeting) => {
-      channels.forEach(async (channel) => {
+    for (const meeting of meetings) {
+      for (const channel of channels.values()) {
         if (meeting.channelId === channel.id) {
           await channel.delete(channel.id);
         }
-      });
-    });
+      }
+    }
   };
 
   if (resetAll !== undefined) {
@@ -45,6 +46,9 @@ module.exports.run = async (client, message, args) => {
       await message.channel.send("Erreur, les matchs en cours n'ont pas été supprimés.");
     } */
   }
+
+  if (resetScores !== undefined) {
+  }
 };
 
 module.exports.help = {
@@ -56,6 +60,7 @@ module.exports.help = {
   options: {
     '--reset-all': 'Reset tout le tournoi',
     '--matches': 'Reset uniquement les matchs',
+    '--scores': 'Reset le score du match en paramètre',
   },
   canAdminMention: false,
   isPermissionsRequired: true,

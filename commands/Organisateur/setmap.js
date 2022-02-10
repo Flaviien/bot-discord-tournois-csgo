@@ -3,7 +3,7 @@ module.exports.run = async (client, message, args) => {
   const matchId = args[0];
   const match = (await client.getMatch(matchId)) || [];
   if (match.length === 0) {
-    return message.channel.send(`Veuillez définir les matchs du tournoi`);
+    return message.channel.send(`Ce match n'a pas été trouvé`);
   }
   const meetingOfThisMatch = await match.getMeeting();
   const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);

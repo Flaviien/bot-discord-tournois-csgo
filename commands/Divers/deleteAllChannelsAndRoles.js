@@ -6,7 +6,14 @@ module.exports.run = async (client, message, args) => {
   const delChannels = async () => {
     const channels = await message.guild.channels.fetch();
     channels.forEach((channel) => {
-      if (channel.id !== '807215053845692466') {
+      if (
+        //Accueil et catégories
+        channel.id !== '807215053845692466' &&
+        channel.id !== '941091287245934603' &&
+        channel.id !== '941091317579124756' &&
+        channel.id !== '941091338718412840' &&
+        channel.id !== '941091405927944244'
+      ) {
         channel.delete(channel.id);
       }
     });

@@ -8,6 +8,7 @@ module.exports.run = async (client, message, args) => {
     return message.channel.send(`Ce match n'existe pas.`);
   }
   let meetingOfThisMatch = await match.getMeeting();
+  const matches = await meetingOfThisMatch.getMatches();
   const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
   const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
   const winnerMention = message.mentions.roles.first();
@@ -18,7 +19,7 @@ module.exports.run = async (client, message, args) => {
     return regex.test(input);
   }
 
-  /* if (match.maps_id === null) {
+  if (match.maps_id === null) {
     return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${prefix}setmap***.`);
   }
 
@@ -48,7 +49,18 @@ module.exports.run = async (client, message, args) => {
 
   if (found === undefined) {
     return message.channel.send(`L'équipe que vous avez mentionné ne participe pas à ce match`);
-  } */
+  }
+
+  for (const match of matches) {
+    if (parseInt(matchId.charAt(matchId.length - 1)) > parseInt(match.matchId.charAt(match.matchId.length - 1)) && match.status !== 'over') {
+      return message.channel.send(
+        `Vous ne pouvez pas donner de résultat à ce match car les résultats des autres matchs de cette rencontre n'ont pas été définis.`
+      );
+    }
+    if (parseInt(matchId.charAt(matchId.length - 1)) === parseInt(match.matchId.charAt(match.matchId.length - 1))) {
+      break;
+    }
+  }
 
   await client.updateMatch(matchId, 'status', 'over');
   await client.updateMatch(matchId, 'score', score);
@@ -58,8 +70,6 @@ module.exports.run = async (client, message, args) => {
   if (meetingOfThisMatch.BO === 1) {
     await client.updateMeeting(meetingOfThisMatch.meetingId, 'winner', winnerMention.name);
   } else if (meetingOfThisMatch.BO === 3 || meetingOfThisMatch.BO === 5) {
-    const matches = await meetingOfThisMatch.getMatches();
-
     for (const teamOfThisMeeting of teamsOfThisMeeting) {
       const nbrOfWin = matches.filter((m) => m.winner === teamOfThisMeeting.name).length;
       if (meetingOfThisMatch.BO === 3) {
