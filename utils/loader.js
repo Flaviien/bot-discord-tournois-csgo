@@ -7,9 +7,7 @@ const { readdirSync } = require('fs');
  */
 const loadCommands = (client, dir = './commands/') => {
   readdirSync(dir).forEach((dirs) => {
-    const commands = readdirSync(`${dir}/${dirs}/`).filter((files) =>
-      files.endsWith('.js')
-    );
+    const commands = readdirSync(`${dir}/${dirs}/`).filter((files) => files.endsWith('.js'));
 
     for (const file of commands) {
       const getFileName = require(`../${dir}/${dirs}/${file}`);
@@ -25,9 +23,7 @@ const loadCommands = (client, dir = './commands/') => {
  */
 const loadEvents = (client, dir = './events/') => {
   readdirSync(dir).forEach((dirs) => {
-    const events = readdirSync(`${dir}/${dirs}/`).filter((files) =>
-      files.endsWith('.js')
-    );
+    const events = readdirSync(`${dir}/${dirs}/`).filter((files) => files.endsWith('.js'));
 
     for (const event of events) {
       const evt = require(`../${dir}/${dirs}/${event}`);

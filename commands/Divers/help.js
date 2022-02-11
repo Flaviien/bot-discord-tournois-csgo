@@ -3,15 +3,13 @@ const { readdirSync } = require('fs');
 const categoryList = readdirSync('./commands');
 
 module.exports.run = async (client, message, args) => {
-  const prefix = await client.getSetting('prefix');
-
   if (!args.length) {
     //Si on écrit !help, sans nom de commande
     const embed = new MessageEmbed()
       .setColor('#36393F')
       .addField(
         'Liste des commandes',
-        `Voici la liste de toutes les commandes disponible.\nPour plus d'informations sur une commande, tapez \`${prefix}help <command_name>\``
+        `Voici la liste de toutes les commandes disponible.\nPour plus d'informations sur une commande, tapez \`${client.prefix}help <command_name>\``
       );
 
     for (const category of categoryList) {
@@ -31,7 +29,7 @@ module.exports.run = async (client, message, args) => {
 
     const embed = new MessageEmbed().setColor('#36393F').setTitle(`\`${command.help.name}\``).addField('Description', `${command.help.description}`);
 
-    command.help.usage ? embed.addField('Utilisation', `${prefix}${command.help.name} ${command.help.usage}`, true) : '';
+    command.help.usage ? embed.addField('Utilisation', `${client.prefix}${command.help.name} ${command.help.usage}`, true) : '';
 
     if (command.help.options) {
       let options = ``;

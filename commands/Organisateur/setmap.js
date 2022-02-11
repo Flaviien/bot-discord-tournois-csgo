@@ -1,5 +1,4 @@
 module.exports.run = async (client, message, args) => {
-  const prefix = await client.getSetting('prefix');
   const matchId = args[0];
   const match = (await client.getMatch(matchId)) || [];
   if (match.length === 0) {

@@ -16,6 +16,7 @@ module.exports = (client) => {
     try {
       const prefix = await Setting.findOne({ where: { name: 'prefix' } });
       await prefix.update({ key_string: newPrefix });
+      client.prefix = prefix.key_string;
       return 'Le prefix a été modifié';
     } catch (error) {
       return "Erreur, le prefix n'a pas été modifié";

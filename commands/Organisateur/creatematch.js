@@ -28,28 +28,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (teams.length === 2) {
-    const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
-    const prefix = await client.getSetting('prefix');
-    const nbrTeams = await client.getSetting('nbr_teams');
-    const channel = await message.guild.channels.create(`${nbrTeams / 2}eme-${teams[0].name} vs ${teams[1].name}`, {
-      parent: client.config.CATEGORIES_CHANNELS_ID.stage8,
-    });
-    const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
-
-    commands.forEach((command) => {
-      embed.addField(`${prefix}${command.help.aliases.join(`, ${prefix}`)}`, `${command.help.description}`);
-    });
-
-    //Ajout des rencontres
-    const meetings = (await client.getMeetings()) || [];
-    const meeting = await client.addMeeting(`${nbrTeams / 2}e${meetings.length + 1}`, channel.id, teams[0].id, teams[1].id);
-
-    channel.send({ embeds: [embed] });
-
-    //Ajout des matchs
-    for (let i = 1; i <= meeting.BO; i++) {
-      await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
-    }
+    await client.createMatch(message, teams[0], teams[1], 8);
   }
 };
 

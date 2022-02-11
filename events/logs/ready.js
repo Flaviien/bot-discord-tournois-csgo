@@ -11,7 +11,7 @@ module.exports = async (client) => {
   }
 
   client.user.setPresence({
-    activity: [{ name: `${await client.getSetting('prefix')}help pour plus d'infos`, type: 'PLAYING' }],
+    activity: [{ name: `${client.prefix}help pour plus d'infos`, type: 'PLAYING' }],
     status: 'online',
   });
 };

@@ -1,7 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
-  const prefix = await client.getSetting('prefix');
   const matchId = args[0];
   const match = (await client.getMatch(matchId)) || [];
   if (match.length === 0) {
@@ -20,12 +19,12 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (match.maps_id === null) {
-    return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${prefix}setmap***.`);
+    return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${client.prefix}setmap***.`);
   }
 
   if (match.status === 'waiting') {
     return message.channel.send(
-      `Ce match n'est pas défini comme étant commencé. En lui définissant une map, ce match sera défini comme étant commencé. Essayez la commande ***${prefix}setmap***.`
+      `Ce match n'est pas défini comme étant commencé. En lui définissant une map, ce match sera défini comme étant commencé. Essayez la commande ***${client.prefix}setmap***.`
     );
   }
 
@@ -112,11 +111,10 @@ module.exports.run = async (client, message, args) => {
       const team1 = await client.getTeam('name', meetingOfThisMatch.winner);
       const team2 = await client.getTeam('name', secondMeeting.winner);
       const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
-      const prefix = await client.getSetting('prefix');
       let channel;
       const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
       commands.forEach((command) => {
-        embed.addField(`${prefix}${command.help.aliases.join(`, ${prefix}`)}`, `${command.help.description}`);
+        embed.addField(`${client.prefix}${command.help.aliases.join(`, ${client.prefix}`)}`, `${command.help.description}`);
       });
 
       if (meetingId.charAt(0) === '8') {

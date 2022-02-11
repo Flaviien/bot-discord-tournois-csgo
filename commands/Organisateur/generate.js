@@ -1,7 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
-  const prefix = await client.getSetting('prefix');
   const teams = (await client.getTeams()) || [];
   const nbrTeams = await client.getSetting('nbr_teams');
   const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
@@ -10,7 +9,7 @@ module.exports.run = async (client, message, args) => {
   if (meetings.length > 0) {
     return message.channel.send(
       `Des matchs sont déjà programmés.\n
-      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
+      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${client.prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
     );
   }
 
@@ -19,7 +18,7 @@ module.exports.run = async (client, message, args) => {
   }
   if (teams.length > nbrTeams) {
     return message.channel.send(`Le nombre d'équipe pour générer les rencontres est trop élevé: ${teams.length}/${nbrTeams}\n
-    Vous pouvez utiliser la commande ***${prefix}unsub <@equipe>*** pour désinscrire une équipe.`);
+    Vous pouvez utiliser la commande ***${client.prefix}unsub <@equipe>*** pour désinscrire une équipe.`);
   }
 
   //Boucle qui mélange un tableau (modifie le tableau d'origine)
@@ -31,29 +30,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   for (let i = 0; i < nbrTeams / 2; i++) {
-    //Création des channels
-    const channel = await message.guild.channels.create(`${nbrTeams / 2}eme-${teams[i * 2].name} vs ${teams[i * 2 + 1].name}`, {
-      parent: client.config.CATEGORIES_CHANNELS_ID.stage8,
-    });
-
-    const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
-
-    commands.forEach((command) => {
-      embed.addField(`${prefix}${command.help.aliases.join(`, ${prefix}`)}`, `${command.help.description}`);
-    });
-
-    //Ajout des rencontres
-    await client.addMeeting(`${nbrTeams / 2}e${i + 1}`, channel.id, teams[i * 2].id, teams[i * 2 + 1].id);
-
-    channel.send({ embeds: [embed] });
-  }
-
-  meetings = await client.getMeetings();
-  //Ajout des matchs
-  for (const meeting of meetings) {
-    for (let i = 1; i <= meeting.BO; i++) {
-      await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
-    }
+    await client.createMatch(message, teams[i * 2], teams[i * 2 + 1], nbrTeams / 2);
   }
 };
 
