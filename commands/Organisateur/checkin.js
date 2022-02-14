@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
         const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
 
         channel.send(
-          `${teamsOfThisMeeting[0].name} & ${teamsOfThisMeeting[1].name}, merci de vous présenter en tappant la commande ***${client.prefix}ready***`
+          `${teamsOfThisMeeting[0].name} & ${teamsOfThisMeeting[1].name}, merci de vous présenter en tappant la commande ***${client.settings.prefix}ready***`
         );
 
         for (const teamOfThisMeeting of teamsOfThisMeeting) {

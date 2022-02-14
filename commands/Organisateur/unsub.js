@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args) => {
   const meetings = await client.getMeetings();
   if (meetings.length !== 0) {
     return message.channel.send(
-      `Le tournoi est en cours, vous ne pouvez pas supprimer les équipes. Essayez plutôt la commande ***${client.prefix}ff <@nom_de_l_equipe>***`
+      `Le tournoi est en cours, vous ne pouvez pas supprimer les équipes. Essayez plutôt la commande ***${client.settings.prefix}ff <@nom_de_l_equipe>***`
     );
   }
 

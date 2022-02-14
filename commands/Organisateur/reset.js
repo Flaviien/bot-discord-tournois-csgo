@@ -1,8 +1,9 @@
-module.exports.run = async (client, message, args) => {
-  const resetAll = args.find((x) => x.toLowerCase() === '--all');
-  const resetMeetings = args.find((x) => x.toLowerCase() === '--matches');
-  const resetScores = args.find((x) => x.toLowerCase() === '--scores');
+module.exports.run = async (client, message, args, options) => {
+  const resetAll = options.find((x) => x.toLowerCase() === '--all');
+  const resetMeetings = options.find((x) => x.toLowerCase() === '--matches');
+  const resetScores = options.find((x) => x.toLowerCase() === '--scores');
   const meetings = (await client.getMeetings()) || [];
+  const nbrTeams = await client.getSetting('nbr_teams');
 
   const delChannels = async () => {
     const channels = await message.guild.channels.fetch();
@@ -15,7 +16,7 @@ module.exports.run = async (client, message, args) => {
     }
   };
 
-  if (resetAll !== undefined) {
+  if (resetAll != undefined) {
     const teams = (await client.getTeams()) || [];
     const roles = await message.guild.roles.fetch();
 
@@ -37,7 +38,7 @@ module.exports.run = async (client, message, args) => {
     } */
   }
 
-  if (resetMeetings !== undefined) {
+  if (resetMeetings != undefined) {
     delChannels();
     await client.removeMeetings();
     /* if () {
@@ -47,7 +48,12 @@ module.exports.run = async (client, message, args) => {
     } */
   }
 
-  if (resetScores !== undefined) {
+  if (resetScores != undefined) {
+    for (const meeting of meetings) {
+      if (meeting.meetingId.charAt(0) != nbrTeams / 2) {
+        //TODO
+      }
+    }
   }
 };
 
@@ -58,9 +64,9 @@ module.exports.help = {
   description: 'Reset le tournoi. Attention, la commande ne demande pas de confirmation.',
   usage: '',
   options: {
-    '--reset-all': 'Reset tout le tournoi',
+    '--all': 'Reset tout le tournoi',
     '--matches': 'Reset uniquement les matchs',
-    '--scores': 'Reset le score du match en paramètre',
+    '--scores': "Reset les scores mais garde l'arbre initial",
   },
   canAdminMention: false,
   isPermissionsRequired: true,

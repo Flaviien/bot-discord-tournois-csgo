@@ -3,39 +3,39 @@ module.exports.run = async (client, message, args) => {
 
   if (setting === 'veto') {
     if (args[1] !== 'true' && args[1] !== 'false') return;
-    message.channel.send(await client.updateVeto(args[1]));
+    return message.channel.send(await client.updateVeto(args[1]));
   }
 
   if (setting === 'bo') {
     if (args[1] !== '1' && args[1] !== '3' && args[1] !== '5') return;
-    message.channel.send(await client.updateBO(args[1]));
+    return message.channel.send(await client.updateBO(args[1]));
   }
 
   if (setting === 'prefix') {
     if (args[1].length > 2) return;
-    message.channel.send(await client.updatePrefix(args[1]));
+    return message.channel.send(await client.updatePrefix(args[1]));
   }
 
   if (setting === 'perm' || setting === 'permission') {
     if (args[1] !== 'true' && args[1] !== 'false') return;
-    message.channel.send(await client.updatePermission(args[1]));
+    return message.channel.send(await client.updatePermission(args[1]));
   }
 
   if (setting === 'checkin') {
-    await client.updateCheckinTimer(args[0]);
+    return await client.updateCheckinTimer(args[0]);
   }
 
   if (setting === 'nbr_teams') {
-    message.channel.send(await client.updateNbrTeams(args[1]));
+    return message.channel.send(await client.updateNbrTeams(args[1]));
   }
 
   if (setting === 'ds' || setting === 'defaultsettings') {
-    await client.updatePermission('true');
-    await client.updatePrefix('!');
-    await client.updateNbrTeams('16');
-    await client.updateCheckinTimer('15');
-    await client.updateVeto('0');
-    await client.updateBO('1');
+    await client.updatePermission(client.config.permissions);
+    await client.updatePrefix(client.config.prefix);
+    await client.updateNbrTeams(client.config.nbrTeams);
+    await client.updateCheckinTimer(client.config.checkinTimer);
+    await client.updateVeto(client.config.veto);
+    await client.updateBO(client.config.BO);
   }
 };
 

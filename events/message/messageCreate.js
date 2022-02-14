@@ -6,15 +6,22 @@
 const { Collection } = require('discord.js');
 
 module.exports = async (client, message) => {
-  if (message.content.includes('discord.gg/')) {
-    message.delete();
-    //TODO: Faire un système d'avertissement.
+  if (message.author.bot) return; //Si le message est écrit par un bot.
+  if (!message.content.startsWith(client.settings.prefix)) return; //Si le message n'a pas de préfix.
+
+  const rawArgs = message.content.slice(client.settings.prefix.length).split(/ +/);
+  let args = [];
+  let options = [];
+
+  for (const rawArg of rawArgs) {
+    if (rawArg.charAt(0) === '-' && rawArg.charAt(1) === '-') {
+      //Tout les arguments commencant par "--". Exemple: --admin
+      options.push(rawArg);
+    } else {
+      args.push(rawArg);
+    }
   }
 
-  if (message.author.bot) return; //Si le message est écrit par un bot.
-  if (!message.content.startsWith(client.prefix)) return; //Si le message n'a pas de préfix.
-
-  const args = message.content.slice(client.prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 
   const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.help.aliases && cmd.help.aliases.includes(commandName));
@@ -78,5 +85,5 @@ module.exports = async (client, message) => {
   timestamps.set(message.author.id, timeNow);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-  command.run(client, message, args);
+  command.run(client, message, args, options);
 };

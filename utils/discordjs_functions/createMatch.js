@@ -25,7 +25,7 @@ module.exports = (client) => {
       const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste des commandes qui vous sont accessibles pour ce tournoi:');
 
       commands.forEach((command) => {
-        embed.addField(`${client.prefix}${command.help.aliases.join(`, ${client.prefix}`)}`, `${command.help.description}`);
+        embed.addField(`${client.settings.prefix}${command.help.aliases.join(`, ${client.settings.prefix}`)}`, `${command.help.description}`);
       });
 
       //Ajout des rencontres

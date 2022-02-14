@@ -16,7 +16,7 @@ module.exports = (client) => {
     try {
       const prefix = await Setting.findOne({ where: { name: 'prefix' } });
       await prefix.update({ key_string: newPrefix });
-      client.prefix = prefix.key_string;
+      client.settings.prefix = prefix.key_string;
       return 'Le prefix a été modifié';
     } catch (error) {
       return "Erreur, le prefix n'a pas été modifié";
@@ -33,9 +33,11 @@ module.exports = (client) => {
       if (/false/i.test(isPermissionString)) boolValue = false;
       if (boolValue) {
         await permission.update({ key_int: 1 });
+        client.permissions = permission.key_int;
         return 'Les participants ont désormais accès aux commandes';
       } else {
         await permission.update({ key_int: 0 });
+        client.permissions = permission.key_int;
         return "Les participants n'ont désormais plus accès aux commandes";
       }
     } catch (error) {
@@ -47,6 +49,7 @@ module.exports = (client) => {
     try {
       const nbrTeams = await Setting.findOne({ where: { name: 'nbr_teams' } });
       await nbrTeams.update({ key_int: newNbrTeams });
+      client.nbrTeams = nbrTeams.key_int;
       return "Le nombre d'équipe a été modifié";
     } catch (error) {
       console.log(error);
@@ -57,6 +60,7 @@ module.exports = (client) => {
     try {
       const BO = await Setting.findOne({ where: { name: 'default_BO' } });
       await BO.update({ key_int: newBO });
+      client.BO = BO.key_int;
       return 'Le BO par défaut a été modifié';
     } catch (error) {
       console.log(error);
@@ -69,6 +73,7 @@ module.exports = (client) => {
         where: { name: 'checkin_time' },
       });
       await checkin.update({ key_int: newCheckin });
+      client.checkinTimer = checkin.key_int;
       return 'Le checkin a été modifié';
     } catch (error) {
       return "Erreur, le checkin n'a pas été modifié";
@@ -84,6 +89,7 @@ module.exports = (client) => {
       if (/true/i.test(isVetoString)) boolValue = true;
       if (/false/i.test(isVetoString)) boolValue = false;
       await veto.update({ key_int: boolValue ? 1 : 0 });
+      client.veto = veto.key_int;
       return 'La veto a été modifiée';
     } catch (error) {
       return "Erreur, la veto n'a pas été modifiée";

@@ -15,6 +15,7 @@ const client = new Discord.Client({
 require('./utils/db_functions/index')(client);
 require('./utils/discordjs_functions/index')(client);
 client.config = require('./config');
+client.settings = {};
 client.commands = new Discord.Collection();
 client.matches = new Discord.Collection();
 
@@ -23,22 +24,24 @@ loadEvents(client);
 
 client.login(client.config.TOKEN);
 
-//Fonction pour inclure le prefix sur le client. Pour éviter les appels à la DB
-(async () => {
-  client
-    .getSetting('prefix')
-    .then((prefix) => {
-      if (prefix == null) {
-        if (client.config.DEFAULTSETTINGS.prefix == null) {
-          throw prefix;
+//Fonction pour inclure les settings sur le client. Pour éviter les appels à la DB
+for (const setting in client.config.DEFAULTSETTINGS) {
+  (async () => {
+    client
+      .getSetting(`${setting}`)
+      .then((s) => {
+        if (s == null) {
+          if (client.config.DEFAULTSETTINGS[setting] == null) {
+            throw s;
+          } else {
+            client.settings[setting] = client.config.DEFAULTSETTINGS[setting];
+          }
         } else {
-          client.prefix = client.config.DEFAULTSETTINGS.prefix;
+          client.settings[setting] = s;
         }
-      } else {
-        client.prefix = prefix;
-      }
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-})();
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  })();
+}

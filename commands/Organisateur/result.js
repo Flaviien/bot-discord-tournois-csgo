@@ -11,18 +11,15 @@ module.exports.run = async (client, message, args) => {
   const winnerMention = message.mentions.roles.first();
   const score = args[2];
 
-  function useRegex(input) {
-    let regex = /\d\d-\d\d/;
-    return regex.test(input);
-  }
-
   if (match.maps_id === null) {
-    return message.channel.send(`Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${client.prefix}setmap***.`);
+    return message.channel.send(
+      `Vous devez définir une map à ce match pour pouvoir définir un résultat. Essayez la commande ***${client.settings.prefix}setmap***.`
+    );
   }
 
   if (match.status === 'waiting') {
     return message.channel.send(
-      `Ce match n'est pas défini comme étant commencé. En lui définissant une map, ce match sera défini comme étant commencé. Essayez la commande ***${client.prefix}setmap***.`
+      `Ce match n'est pas défini comme étant commencé. En lui définissant une map, ce match sera défini comme étant commencé. Essayez la commande ***${client.settings.prefix}setmap***.`
     );
   }
 
@@ -30,7 +27,7 @@ module.exports.run = async (client, message, args) => {
     return message.channel.send(`Ce match est déjà fini`);
   }
 
-  if (!useRegex(score)) {
+  if (!/\d\d-\d\d/.test(score)) {
     return message.channel.send('Le score doit être au format 00-00. Exemple: 16-05');
   }
 

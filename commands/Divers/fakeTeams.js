@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
     }
   }
 
-  message.channel.send('Les équipes ont été générés');
+  message.channel.send('Les équipes ont été générées');
 };
 
 module.exports.help = {

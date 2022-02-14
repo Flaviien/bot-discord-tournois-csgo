@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args) => {
   if (meetings.length > 0) {
     return message.channel.send(
       `Des matchs sont déjà programmés.\n
-      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${client.prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
+      Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${client.settings.prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
     );
   }
 
@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args) => {
   }
   if (teams.length > nbrTeams) {
     return message.channel.send(`Le nombre d'équipe pour générer les rencontres est trop élevé: ${teams.length}/${nbrTeams}\n
-    Vous pouvez utiliser la commande ***${client.prefix}unsub <@equipe>*** pour désinscrire une équipe.`);
+    Vous pouvez utiliser la commande ***${client.settings.prefix}unsub <@equipe>*** pour désinscrire une équipe.`);
   }
 
   //Boucle qui mélange un tableau (modifie le tableau d'origine)

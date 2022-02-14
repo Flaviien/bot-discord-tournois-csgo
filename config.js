@@ -5,7 +5,12 @@ module.exports = {
   TOKEN: privateEnv.TOKEN,
   DBCONNECTION: db,
   DEFAULTSETTINGS: {
+    permissions: privateEnv.DEFAULTSETTINGS.permissions,
     prefix: privateEnv.DEFAULTSETTINGS.prefix,
+    nbrTeams: privateEnv.DEFAULTSETTINGS.nbrTeams,
+    checkinTimer: privateEnv.DEFAULTSETTINGS.checkinTimer,
+    veto: privateEnv.DEFAULTSETTINGS.veto,
+    BO: privateEnv.DEFAULTSETTINGS.BO,
   },
   CHANNELS_ID: {
     logChannel: privateEnv.CHANNELS_ID.logChannel,
