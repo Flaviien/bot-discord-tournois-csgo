@@ -8,7 +8,7 @@ module.exports = (client) => {
       if (setting && setting.key_int !== null) return setting.key_int;
       if (setting && setting.key_string !== null) return setting.key_string;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -52,7 +52,7 @@ module.exports = (client) => {
       client.nbrTeams = nbrTeams.key_int;
       return "Le nombre d'équipe a été modifié";
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -63,7 +63,7 @@ module.exports = (client) => {
       client.BO = BO.key_int;
       return 'Le BO par défaut a été modifié';
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

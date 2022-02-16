@@ -7,7 +7,7 @@ module.exports = (client) => {
       const map = await Map.findOne({ where: { name } });
       return map;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -16,7 +16,7 @@ module.exports = (client) => {
       const maps = await Map.findAll();
       return maps;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 };

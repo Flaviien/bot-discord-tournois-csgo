@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args, options) => {
 
         embed.addField(`${teams[0].name} vs ${teams[1].name}  - BO${meeting.BO}`, await matchDetails(matches));
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     message.channel.send({ embeds: [embed] });
@@ -59,7 +59,7 @@ module.exports.run = async (client, message, args, options) => {
       embed.setDescription(await matchDetails(matches));
       message.channel.send({ embeds: [embed] });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

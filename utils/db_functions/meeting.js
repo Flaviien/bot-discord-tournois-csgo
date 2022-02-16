@@ -9,7 +9,7 @@ module.exports = (client) => {
       const meetings = await MeetingTeams.findAll({ where: { meetings_id } });
       return meetings;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }; */
 
@@ -18,7 +18,7 @@ module.exports = (client) => {
       const meeting = await Meeting.findOne({ where: { meetingId } });
       return meeting;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -27,7 +27,7 @@ module.exports = (client) => {
       const meetings = await Meeting.findAll();
       return meetings;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -38,7 +38,7 @@ module.exports = (client) => {
       await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_2 });
       return meeting;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -47,7 +47,7 @@ module.exports = (client) => {
       const meeting = await client.getMeeting(meetingId);
       await meeting.update({ [key]: value });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -59,7 +59,7 @@ module.exports = (client) => {
         await meeting.destroy();
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 };

@@ -7,7 +7,7 @@ module.exports = (client) => {
       const member = await Member.findOne({ where: { name: memberName } });
       return member;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -23,7 +23,7 @@ module.exports = (client) => {
         return member;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }; */
 
@@ -32,7 +32,7 @@ module.exports = (client) => {
       const members = await Member.findAll();
       return members;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -47,7 +47,7 @@ module.exports = (client) => {
         teams_id: team.id,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -56,7 +56,7 @@ module.exports = (client) => {
       const member = await Member.findOne({ where: { memberId } });
       member.destroy();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

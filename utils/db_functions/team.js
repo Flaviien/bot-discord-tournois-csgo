@@ -8,7 +8,7 @@ module.exports = (client) => {
       const team = await Team.findOne({ where: { [key]: value } });
       return team;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -17,7 +17,7 @@ module.exports = (client) => {
       const teams = await Team.findAll();
       if (teams && teams.length != 0) return teams;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -40,7 +40,7 @@ module.exports = (client) => {
       await team.destroy();
       return team;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -51,7 +51,7 @@ module.exports = (client) => {
         await team.destroy();
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 };

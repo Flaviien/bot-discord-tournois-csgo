@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args) => {
         await role.delete();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     try {
@@ -35,10 +35,10 @@ module.exports.run = async (client, message, args) => {
         await channel.delete();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

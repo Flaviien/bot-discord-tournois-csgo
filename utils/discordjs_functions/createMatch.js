@@ -40,7 +40,7 @@ module.exports = (client) => {
         await client.addMatch(`${meeting.meetingId}.${i}`, meeting.meetingId);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 };

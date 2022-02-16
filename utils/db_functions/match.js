@@ -7,7 +7,7 @@ module.exports = (client) => {
       const match = await Match.findOne({ where: { matchId } });
       return match;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -16,7 +16,7 @@ module.exports = (client) => {
       const matches = await Match.findAll();
       return matches;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -24,7 +24,7 @@ module.exports = (client) => {
     try {
       await Match.create({ matchId, meetings_id, status: 'waiting' });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -33,7 +33,7 @@ module.exports = (client) => {
       const match = await client.getMatch(matchId);
       await match.update({ [key]: value });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -42,7 +42,7 @@ module.exports = (client) => {
       const match = await client.getMatch(matchId);
       await match.destroy();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 };
