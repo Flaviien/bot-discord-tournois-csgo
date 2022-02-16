@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (setting === 'checkin') {
-    return await client.updateCheckinTimer(args[0]);
+    return await client.updateCheckinTimer(args[1]);
   }
 
   if (setting === 'nbr_teams') {
@@ -30,12 +30,14 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (setting === 'ds' || setting === 'defaultsettings') {
-    await client.updatePermission(client.config.permissions);
-    await client.updatePrefix(client.config.prefix);
-    await client.updateNbrTeams(client.config.nbrTeams);
-    await client.updateCheckinTimer(client.config.checkinTimer);
-    await client.updateVeto(client.config.veto);
-    await client.updateBO(client.config.BO);
+    await client.updatePermission(client.config.DEFAULTSETTINGS.permissions);
+    await client.updatePrefix(client.config.DEFAULTSETTINGS.prefix);
+    await client.updateNbrTeams(client.config.DEFAULTSETTINGS.nbrTeams);
+    await client.updateCheckinTimer(client.config.DEFAULTSETTINGS.checkinTimer);
+    await client.updateVeto(client.config.DEFAULTSETTINGS.veto);
+    await client.updateBO(client.config.DEFAULTSETTINGS.BO);
+
+    return message.channel.send(`Les paramètres par défaut ont été rétablis.`);
   }
 };
 

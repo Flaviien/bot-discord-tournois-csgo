@@ -49,10 +49,22 @@ module.exports.run = async (client, message, args, options) => {
   }
 
   if (resetScores != undefined) {
-    for (const meeting of meetings) {
-      if (meeting.meetingId.charAt(0) != nbrTeams / 2) {
-        //TODO
+    try {
+      for (const meeting of meetings) {
+        if (meeting.meetingId.charAt(0) != nbrTeams / 2) {
+          await client.removeMeeting(meeting.meetingId);
+        }
+        await client.updateMeeting(meeting.meetingId, 'winner', null);
+        const matches = await meeting.getMatches();
+        for (const match of matches) {
+          await client.updateMatch(match.matchId, 'status', 'waiting');
+          await client.updateMatch(match.matchId, 'winner', null);
+          await client.updateMatch(match.matchId, 'score', null);
+          await client.updateMatch(match.matchId, 'maps_id', null);
+        }
       }
+    } catch (error) {
+      console.error(error);
     }
   }
 };
@@ -70,7 +82,7 @@ module.exports.help = {
   },
   canAdminMention: false,
   isPermissionsRequired: true,
-  isArgumentRequired: true,
+  isArgumentRequired: false,
   needUserMention: false,
   needRoleMention: false,
 };

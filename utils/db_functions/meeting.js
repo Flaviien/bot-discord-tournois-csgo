@@ -51,6 +51,16 @@ module.exports = (client) => {
     }
   };
 
+  client.removeMeeting = async (meetingId) => {
+    //Les matchs sont supprimés en cascade.
+    try {
+      const meeting = await Meeting.findOne({ where: { meetingId } });
+      await meeting.destroy();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   client.removeMeetings = async () => {
     //Les matchs sont supprimés en cascade.
     try {
