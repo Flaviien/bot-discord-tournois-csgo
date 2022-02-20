@@ -51,16 +51,16 @@ module.exports.run = async (client, message, args, options) => {
   if (resetScores != undefined) {
     try {
       for (const meeting of meetings) {
-        if (meeting.meetingId.charAt(0) != nbrTeams / 2) {
-          await client.removeMeeting(meeting.meetingId);
+        if (meeting.id.charAt(0) != nbrTeams / 2) {
+          await client.removeMeeting(meeting.id);
         }
-        await client.updateMeeting(meeting.meetingId, 'winner', null);
+        await client.updateMeeting(meeting.id, 'winner', null);
         const matches = await meeting.getMatches();
         for (const match of matches) {
-          await client.updateMatch(match.matchId, 'status', 'waiting');
-          await client.updateMatch(match.matchId, 'winner', null);
-          await client.updateMatch(match.matchId, 'score', null);
-          await client.updateMatch(match.matchId, 'maps_id', null);
+          await client.updateMatch(match.id, 'status', 'waiting');
+          await client.updateMatch(match.id, 'winner', null);
+          await client.updateMatch(match.id, 'score', null);
+          await client.updateMatch(match.id, 'maps_id', null);
         }
       }
     } catch (error) {

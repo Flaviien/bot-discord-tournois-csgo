@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Matches', {
-      matchId: {
+      id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
         references: {
           model: 'Meetings',
-          key: 'meetingId',
+          key: 'id',
         },
         onDelete: 'CASCADE',
       },

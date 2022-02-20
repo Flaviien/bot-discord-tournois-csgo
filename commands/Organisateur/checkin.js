@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
 
   for (const [i, arg] of args.entries()) {
     for (const [y, match] of matches.entries()) {
-      if (match.matchId === arg) {
+      if (match.id === arg) {
         const meetingOfThisMatch = await match.getMeeting();
         const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
         const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args) => {
         );
 
         for (const teamOfThisMeeting of teamsOfThisMeeting) {
-          client.matches.set(teamOfThisMeeting.name, { matchId: match.matchId, checkin: 1 });
+          client.matches.set(teamOfThisMeeting.name, { id: match.id, checkin: 1 });
           setTimeout(async () => {
             if (client.matches.get(teamOfThisMeeting.name).checkin === 1) {
               client.matches.delete(teamOfThisMeeting.name);

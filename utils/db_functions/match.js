@@ -2,9 +2,9 @@ const models = require('../../database/models/index.js');
 const Match = models.Match;
 
 module.exports = (client) => {
-  client.getMatch = async (matchId) => {
+  client.getMatch = async (id) => {
     try {
-      const match = await Match.findOne({ where: { matchId } });
+      const match = await Match.findOne({ where: { id } });
       return match;
     } catch (error) {
       console.error(error);
@@ -20,26 +20,26 @@ module.exports = (client) => {
     }
   };
 
-  client.addMatch = async (matchId, meetings_id) => {
+  client.addMatch = async (id, meetings_id) => {
     try {
-      await Match.create({ matchId, meetings_id, status: 'waiting' });
+      await Match.create({ id, meetings_id, status: 'waiting' });
     } catch (error) {
       console.error(error);
     }
   };
 
-  client.updateMatch = async (matchId, key, value) => {
+  client.updateMatch = async (id, key, value) => {
     try {
-      const match = await client.getMatch(matchId);
+      const match = await client.getMatch(id);
       await match.update({ [key]: value });
     } catch (error) {
       console.error(error);
     }
   };
 
-  client.removeMatch = async (matchId) => {
+  client.removeMatch = async (id) => {
     try {
-      const match = await client.getMatch(matchId);
+      const match = await client.getMatch(id);
       await match.destroy();
     } catch (error) {
       console.error(error);

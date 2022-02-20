@@ -2,11 +2,16 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Meetings', {
-      meetingId: {
+      id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
       },
+      /* stage: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      }, */
       channelId: {
         allowNull: false,
         type: Sequelize.STRING,

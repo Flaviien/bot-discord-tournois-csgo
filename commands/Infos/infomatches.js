@@ -6,7 +6,7 @@ module.exports.run = async (client, message, args, options) => {
   const matchDetails = async (matches) => {
     let matchList = ``;
     for (let i = 0; i < matches.length; i++) {
-      const matchId = matches[i].matchId;
+      const matchId = matches[i].id;
       const mapNumber = matchId.charAt(matchId.length - 1);
 
       if (matches[i].status === 'waiting') {

@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         references: {
           model: 'Meetings',
-          key: 'meetingId',
+          key: 'id',
         },
         onDelete: 'CASCADE',
       },

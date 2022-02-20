@@ -22,13 +22,13 @@ module.exports.run = async (client, message, args) => {
     const channel = message.guild.channels.cache.get(meeting.channelId);
     if (message.channel.id === channel.id) {
       if (match.checkin === 1) {
-        client.matches.set(team.name, { matchId: match.matchId, checkin: 2 });
+        client.matches.set(team.name, { id: match.id, checkin: 2 });
         channel.send(`${team.name} est là !`);
 
         //Récupération des 2 équipes
         const matches = [];
         client.matches.forEach((m) => {
-          if (m.matchId === match.matchId) {
+          if (m.id === match.id) {
             matches.push(m);
           }
         });

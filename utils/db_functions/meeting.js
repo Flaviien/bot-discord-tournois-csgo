@@ -13,9 +13,9 @@ module.exports = (client) => {
     }
   }; */
 
-  client.getMeeting = async (meetingId) => {
+  client.getMeeting = async (id) => {
     try {
-      const meeting = await Meeting.findOne({ where: { meetingId } });
+      const meeting = await Meeting.findOne({ where: { id } });
       return meeting;
     } catch (error) {
       console.error(error);
@@ -31,30 +31,30 @@ module.exports = (client) => {
     }
   };
 
-  client.addMeeting = async (meetingId, channelId, teams_id_1, teams_id_2) => {
+  client.addMeeting = async (id, channelId, teams_id_1, teams_id_2) => {
     try {
-      const meeting = await Meeting.create({ meetingId, channelId, BO: await client.getSetting('default_BO') });
-      await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_1 });
-      await MeetingTeams.create({ meetings_id: meetingId, teams_id: teams_id_2 });
+      const meeting = await Meeting.create({ id, channelId, BO: await client.getSetting('default_BO') });
+      await MeetingTeams.create({ meetings_id: id, teams_id: teams_id_1 });
+      await MeetingTeams.create({ meetings_id: id, teams_id: teams_id_2 });
       return meeting;
     } catch (error) {
       console.error(error);
     }
   };
 
-  client.updateMeeting = async (meetingId, key, value) => {
+  client.updateMeeting = async (id, key, value) => {
     try {
-      const meeting = await client.getMeeting(meetingId);
+      const meeting = await client.getMeeting(id);
       await meeting.update({ [key]: value });
     } catch (error) {
       console.error(error);
     }
   };
 
-  client.removeMeeting = async (meetingId) => {
+  client.removeMeeting = async (id) => {
     //Les matchs sont supprimés en cascade.
     try {
-      const meeting = await Meeting.findOne({ where: { meetingId } });
+      const meeting = await Meeting.findOne({ where: { id } });
       await meeting.destroy();
     } catch (error) {
       console.error(error);

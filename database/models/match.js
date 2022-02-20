@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Match.init(
     {
-      matchId: {
+      id: {
         type: DataTypes.STRING,
         primaryKey: true,
       },

@@ -46,12 +46,12 @@ module.exports.run = async (client, message, args) => {
   }
 
   for (const match of matches) {
-    if (parseInt(matchId.charAt(matchId.length - 1)) > parseInt(match.matchId.charAt(match.matchId.length - 1)) && match.status !== 'over') {
+    if (parseInt(matchId.charAt(matchId.length - 1)) > parseInt(match.id.charAt(match.id.length - 1)) && match.status !== 'over') {
       return message.channel.send(
         `Vous ne pouvez pas donner de résultat à ce match car les résultats des autres matchs de cette rencontre n'ont pas été définis.`
       );
     }
-    if (parseInt(matchId.charAt(matchId.length - 1)) === parseInt(match.matchId.charAt(match.matchId.length - 1))) {
+    if (parseInt(matchId.charAt(matchId.length - 1)) === parseInt(match.id.charAt(match.id.length - 1))) {
       break;
     }
   }
@@ -62,13 +62,13 @@ module.exports.run = async (client, message, args) => {
 
   //Condition qui définie le gagnant du meeting.
   if (meetingOfThisMatch.BO === 1) {
-    await client.updateMeeting(meetingOfThisMatch.meetingId, 'winner', winnerMention.name);
+    await client.updateMeeting(meetingOfThisMatch.id, 'winner', winnerMention.name);
   } else if (meetingOfThisMatch.BO === 3 || meetingOfThisMatch.BO === 5) {
     for (const teamOfThisMeeting of teamsOfThisMeeting) {
       const nbrOfWin = matches.filter((m) => m.winner === teamOfThisMeeting.name).length;
       if (meetingOfThisMatch.BO === 3) {
         if (nbrOfWin === 2) {
-          await client.updateMeeting(meetingOfThisMatch.meetingId, 'winner', winnerMention.name);
+          await client.updateMeeting(meetingOfThisMatch.id, 'winner', winnerMention.name);
           const matchesToDelete = matches.filter((m) => m.status === 'waiting');
           for (const matchToDelete of matchesToDelete) {
             await client.removeMatch(matchToDelete.matchId);
@@ -76,7 +76,7 @@ module.exports.run = async (client, message, args) => {
         }
       } else if (meetingOfThisMatch.BO === 5) {
         if (nbrOfWin === 3) {
-          await client.updateMeeting(meetingOfThisMatch.meetingId, 'winner', winnerMention.name);
+          await client.updateMeeting(meetingOfThisMatch.id, 'winner', winnerMention.name);
         }
       }
     }
@@ -90,7 +90,7 @@ module.exports.run = async (client, message, args) => {
 
   //Création de la prochaine étape du tournois
   meetingOfThisMatch = await match.getMeeting();
-  const meetingId = meetingOfThisMatch.meetingId;
+  const meetingId = meetingOfThisMatch.id;
   if (meetingId.charAt(0) !== '1') {
     //Si c'est le résultat de la finale, on ne va pas plus loin.
 
