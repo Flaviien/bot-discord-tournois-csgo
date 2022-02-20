@@ -71,7 +71,6 @@ module.exports.run = async (client, message, args, options) => {
 module.exports.help = {
   name: 'infomatches',
   aliases: ['infomatches', 'im'],
-  category: 'Infos',
   description: 'Retourne la liste des rencontres ou retourne les détails de la rencontre en paramètre',
   cooldown: 30,
   usage: '',

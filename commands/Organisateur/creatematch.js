@@ -35,7 +35,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'creatematch',
   aliases: ['creatematch', 'cm'],
-  category: 'Organisateur',
   description: "Pour créer les matchs de l'arbre initial manuellement",
   usage: '<@équipe 1> <@équipe 2>',
   canAdminMention: false,

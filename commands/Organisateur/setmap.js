@@ -37,7 +37,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'setmap',
   aliases: ['setmap'],
-  category: 'Organisateur',
   description: 'Défini la map du match en paramètre',
   usage: '<id_du_match> <map>',
   canAdminMention: false,

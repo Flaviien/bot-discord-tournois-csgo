@@ -45,7 +45,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'unsub',
   aliases: ['unsub'],
-  category: 'Organisateur',
   description: 'Désincrit une équipe et ses membres du tournois',
   usage: '<@nom_de_l_equipe>',
   options: {

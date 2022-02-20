@@ -9,7 +9,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'removeplayer',
   aliases: ['removeplayer', 'remp'],
-  category: 'Organisateur',
   description: "Retire un joueur d'une une équipe existante",
   usage: '<@joueur> <@joueur> ...',
   canAdminMention: false,

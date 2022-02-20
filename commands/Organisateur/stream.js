@@ -34,7 +34,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'stream',
   aliases: ['stream'],
-  category: 'Organisteur',
   description: "Permet d'ajouter ou de retirer un stream à la liste des streams en cours",
   usage: `+ \n
   <add> <nom_du_streamer> <url>\n

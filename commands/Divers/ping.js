@@ -13,8 +13,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'ping',
   aliases: ['ping', 'test'],
-  category: 'Divers',
-  description: 'Répond pong et les latences du bot / API',
+  description: "Donne latences du bot et de l'API",
   cooldown: 10,
   usage: '',
   canAdminMention: false,

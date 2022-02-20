@@ -44,7 +44,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'tset',
   aliases: ['tset'],
-  category: 'Organisateur',
   description:
     /* 'Commande pour modifier les paramètres du tournois: veto | bo | prefix | permission | checkin | nbr_teams' */
     'Commande pour modifier les paramètres du tournois.',

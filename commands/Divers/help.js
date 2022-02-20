@@ -1,6 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const { readdirSync } = require('fs');
-const categoryList = readdirSync('./commands');
 
 module.exports.run = async (client, message, args) => {
   if (!args.length) {
@@ -12,20 +10,19 @@ module.exports.run = async (client, message, args) => {
         `Voici la liste de toutes les commandes disponible.\nPour plus d'informations sur une commande, tapez \`${client.settings.prefix}help <command_name>\``
       );
 
-    for (const category of categoryList) {
-      embed.addField(
-        `${category}`,
-        `${client.commands
-          .filter((cat) => cat.help.category.toLocaleLowerCase() === category.toLocaleLowerCase())
-          .map((cmd) => cmd.help.name)
-          .join(', ')}`
-      );
+    for (const command of client.commands.values()) {
+      if (!message.member.permissions.has('BAN_MEMBERS') && command.help.isPermissionsRequired) {
+      } else {
+        embed.addField(`${command.help.name}`, `${command.help.description}`);
+      }
     }
 
     return message.channel.send({ embeds: [embed] });
   } else {
     //Si on écrit !help <command_name>
     const command = client.commands.get(args[0]) || client.commands.find((cmd) => cmd.help.aliases && cmd.help.aliases.includes(args[0]));
+
+    if (command == undefined) return message.channel.send(`la commande ${args[0]} n'existe pas`);
 
     const embed = new MessageEmbed().setColor('#36393F').setTitle(`\`${command.help.name}\``).addField('Description', `${command.help.description}`);
 
@@ -48,7 +45,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'help',
   aliases: ['help'],
-  category: 'Divers',
   description: 'Renvoie une liste de commandes ou les informations sur une commande',
   usage: '<command_name>',
   canAdminMention: false,

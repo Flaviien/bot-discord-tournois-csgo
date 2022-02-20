@@ -40,7 +40,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'fakeTeams',
   aliases: ['fakeTeams', 'ft'],
-  category: 'Divers',
   description: 'Filling the DB with teams and his members - Help for development',
   cooldown: 10,
   usage: '',

@@ -20,7 +20,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'infostreams',
   aliases: ['infostreams', 'is'],
-  category: 'Infos',
   description: 'Retourne la liste des streams en cours',
   cooldown: 30,
   usage: '',

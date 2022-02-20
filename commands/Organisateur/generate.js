@@ -37,7 +37,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'generate',
   aliases: ['generate', 'gen'],
-  category: 'Organisateur',
   description: "Génère l'arbre initial grâce aux équipes enregistrées",
   usage: '',
   canAdminMention: false,

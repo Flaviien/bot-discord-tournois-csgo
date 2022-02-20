@@ -49,7 +49,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'deleteAllChannelsAndRoles',
   aliases: ['deleteAllChannelsAndRoles', 'del'],
-  category: 'Divers',
   description: 'Attention ! Supprime tout les channels et les roles ! - Help for development',
   cooldown: 2,
   usage: '',

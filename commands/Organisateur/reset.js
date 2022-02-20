@@ -72,7 +72,6 @@ module.exports.run = async (client, message, args, options) => {
 module.exports.help = {
   name: 'reset',
   aliases: ['reset'],
-  category: 'Organisateur',
   description: 'Reset le tournoi. Attention, la commande ne demande pas de confirmation.',
   usage: '',
   options: {

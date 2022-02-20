@@ -48,7 +48,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'ready',
   aliases: ['ready'],
-  category: 'Participant',
   description: 'Permet à une équipe de valider son checkin',
   cooldown: 0,
   usage: '',

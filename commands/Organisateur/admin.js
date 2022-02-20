@@ -43,7 +43,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'admin',
   aliases: ['admin'],
-  category: 'Organisateur',
   description: "Permet d'ajouter ou de retirer un admin",
   usage: `+ \n
   <add> <@admin>\n

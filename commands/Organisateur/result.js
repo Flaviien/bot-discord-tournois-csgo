@@ -127,7 +127,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'result',
   aliases: ['result'],
-  category: 'Organisateur',
   description: 'Défini le résultat du match en paramètre',
   usage: '<id_du_match> <@équipe gagnante> <score: exemple: 16-05>',
   canAdminMention: false,

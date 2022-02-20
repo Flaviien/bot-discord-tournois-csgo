@@ -16,7 +16,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'addplayer',
   aliases: ['addplayer', 'addp'],
-  category: 'Organisateur',
   description: 'Ajoute un joueur à une équipe existante',
   usage: '<@role_de_l_equipe> <@joueur> <@joueur> ...',
   canAdminMention: false,

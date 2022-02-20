@@ -54,7 +54,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'checkin',
   aliases: ['checkin'],
-  category: 'Organisateur',
   description: 'Lance le checkin pour les matchs en paramètres',
   usage: '<id_du_match> <id_du_match>...',
   canAdminMention: false,

@@ -77,7 +77,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'sub',
   aliases: ['sub'],
-  category: 'Organisateur',
   description: 'Enregistre une équipe et les membres correspondant',
   usage: '<nom_de_l_equipe> <@capitaine> <@joueur> <@joueur> ...',
   canAdminMention: false,
