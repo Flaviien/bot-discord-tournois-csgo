@@ -51,14 +51,16 @@ module.exports.help = {
   usage: `+ \n
     permission <true/false>: Ajoute ou retire la permission aux partipants de tapper des commandes de tournoi\n
     prefix <new_prefix>: Change le prefix des commandes\n
-    veto <true/false/start>: Active ou désactive la fonction veto. Start: Lance la fonction manuellement\n
+    veto <true/false>: Active ou désactive la fonction veto.\n
     bo <1 | 3 | 5>: Modifie le BO par défaut. A faire avant la commande 'generate' si on souhaite changer le BO des 1ers matchs du tournoi.\n
     checkin <minutes>: Modifie le timer du checkin, en minute.\n
     nbr_teams <number>: Modifie le nombre d'équipe qui vont participer au tournois\n
     `,
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

@@ -18,17 +18,21 @@ module.exports.help = {
   cooldown: 10,
   usage: '',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };
 
 /*
 cooldown: 5 secondes par défaut
-canAdminMention: //si false = On ne peux pas mentionner un Admin
+canAdminMention: //si false = On ne peut pas mentionner un Admin
+canUserMention: //si false = On ne peut mentionner personne
+canRoleMention: //si false = On ne peut mentionner aucun rôle
 isPermissionsRequired: //si true = commande uniquement disponible si l'utilisateur à la permission BAN_MEMBERS
 isArgumentRequired: //si true = Un argument au moins est requis
-needUserMention: //si true = On doit mentionner quelqu'un (sauf un bot)
-needRoleMention: //si true = On doit mentionner un role
+isUserMentionRequired: //si true = On doit mentionner quelqu'un (sauf un bot)
+isRoleMentionRequired: //si true = On doit mentionner un role
 */

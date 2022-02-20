@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Admin.init(
     {
-      name: DataTypes.STRING,
+      id: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+      },
     },
     {
       sequelize,

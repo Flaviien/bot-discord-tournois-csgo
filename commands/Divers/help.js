@@ -52,8 +52,10 @@ module.exports.help = {
   description: 'Renvoie une liste de commandes ou les informations sur une commande',
   usage: '<command_name>',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

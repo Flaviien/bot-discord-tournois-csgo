@@ -45,8 +45,10 @@ module.exports.help = {
   cooldown: 10,
   usage: '',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

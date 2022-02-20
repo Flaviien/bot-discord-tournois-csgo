@@ -41,8 +41,10 @@ module.exports.help = {
   description: "Génère l'arbre initial grâce aux équipes enregistrées",
   usage: '',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

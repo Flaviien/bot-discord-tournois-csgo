@@ -13,8 +13,10 @@ module.exports.help = {
   description: "Retire un joueur d'une une équipe existante",
   usage: '<@joueur> <@joueur> ...',
   canAdminMention: false,
+  canUserMention: true,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: true,
-  needRoleMention: false,
+  isUserMentionRequired: true,
+  isRoleMentionRequired: false,
 };

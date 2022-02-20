@@ -41,8 +41,10 @@ module.exports.help = {
   description: 'Défini la map du match en paramètre',
   usage: '<id_du_match> <map>',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

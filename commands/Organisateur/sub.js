@@ -9,6 +9,7 @@ module.exports.run = async (client, message, args) => {
 
   const teamName = args[0];
   const mentions = message.mentions.members;
+
   let leaderMention;
   let membersMention = []; //Toutes les mentions sauf le leader
 
@@ -80,8 +81,10 @@ module.exports.help = {
   description: 'Enregistre une équipe et les membres correspondant',
   usage: '<nom_de_l_equipe> <@capitaine> <@joueur> <@joueur> ...',
   canAdminMention: false,
+  canUserMention: true,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: true,
-  needRoleMention: false,
+  isUserMentionRequired: true,
+  isRoleMentionRequired: false,
 };

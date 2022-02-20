@@ -79,8 +79,10 @@ module.exports.help = {
     '--admin': 'Affiche les identifiants des rencontre',
   },
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: false,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

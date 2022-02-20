@@ -53,8 +53,10 @@ module.exports.help = {
     '--keeprole': "Conserve le role de l'équipe",
   },
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: true,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: true,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: true,
 };

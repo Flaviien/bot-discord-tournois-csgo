@@ -91,28 +91,34 @@ module.exports.run = async (client, message, args) => {
   //Création de la prochaine étape du tournois
   meetingOfThisMatch = await match.getMeeting();
   const meetingId = meetingOfThisMatch.meetingId;
-  if (meetingOfThisMatch.winnner !== null) {
-    const lastCharOfMeeting = parseInt(meetingId.charAt(meetingId.length - 1));
-    let secondMeeting;
-    if (lastCharOfMeeting % 2 === 0) {
-      //pair
-      secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting - 1}`);
-    } else {
-      //impair
-      secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting + 1}`);
-    }
-    if (secondMeeting.winner !== null) {
-      const team1 = await client.getTeam('name', meetingOfThisMatch.winner);
-      const team2 = await client.getTeam('name', secondMeeting.winner);
+  if (meetingId.charAt(0) !== '1') {
+    //Si c'est le résultat de la finale, on ne va pas plus loin.
 
-      if (meetingId.charAt(0) === '8') {
-        await client.createMatch(message, team1, team2, 4);
+    if (meetingOfThisMatch.winnner !== null) {
+      const lastCharOfMeeting = parseInt(meetingId.charAt(meetingId.length - 1));
+      let secondMeeting;
+
+      if (lastCharOfMeeting % 2 === 0) {
+        //pair
+        secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting - 1}`);
+      } else {
+        //impair
+        secondMeeting = await client.getMeeting(`${meetingId.substring(0, meetingId.length - 1)}${lastCharOfMeeting + 1}`);
       }
-      if (meetingId.charAt(0) === '4') {
-        await client.createMatch(message, team1, team2, 2);
-      }
-      if (meetingId.charAt(0) === '2') {
-        await client.createMatch(message, team1, team2, 1);
+
+      if (secondMeeting.winner !== null) {
+        const team1 = await client.getTeam('name', meetingOfThisMatch.winner);
+        const team2 = await client.getTeam('name', secondMeeting.winner);
+
+        if (meetingId.charAt(0) === '8') {
+          await client.createMatch(message, team1, team2, 4);
+        }
+        if (meetingId.charAt(0) === '4') {
+          await client.createMatch(message, team1, team2, 2);
+        }
+        if (meetingId.charAt(0) === '2') {
+          await client.createMatch(message, team1, team2, 1);
+        }
       }
     }
   }
@@ -125,8 +131,10 @@ module.exports.help = {
   description: 'Défini le résultat du match en paramètre',
   usage: '<id_du_match> <@équipe gagnante> <score: exemple: 16-05>',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: true,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: false,
-  needRoleMention: true,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: true,
 };

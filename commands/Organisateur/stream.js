@@ -25,13 +25,6 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(await client.addStream(name, url));
   }
 
-  /* if (args[0] === 'update') {
-    const name = args[1];
-    const url = args[2];
-
-    message.channel.send(await client.updateStream(name, url));
-  } */
-
   if (args[0] === 'remove') {
     const name = args[1];
     message.channel.send(await client.removeStream(name));
@@ -47,8 +40,10 @@ module.exports.help = {
   <add> <nom_du_streamer> <url>\n
   <remove> <nom_du_streamer>`,
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

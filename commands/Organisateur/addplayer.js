@@ -20,8 +20,10 @@ module.exports.help = {
   description: 'Ajoute un joueur à une équipe existante',
   usage: '<@role_de_l_equipe> <@joueur> <@joueur> ...',
   canAdminMention: false,
+  canUserMention: true,
+  canRoleMention: true,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: true,
-  needRoleMention: true,
+  isUserMentionRequired: true,
+  isRoleMentionRequired: true,
 };

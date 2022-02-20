@@ -1,6 +1,4 @@
-module.exports.run = async (client, message, args) => {
-  console.log(client);
-};
+module.exports.run = async (client, message, args) => {};
 
 module.exports.help = {
   name: 'test',
@@ -8,9 +6,11 @@ module.exports.help = {
   category: 'Divers',
   description: 'Help for development',
   usage: '',
-  canAdminMention: true,
+  canAdminMention: false,
+  canUserMention: true,
+  canRoleMention: true,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: true,
+  isRoleMentionRequired: false,
 };

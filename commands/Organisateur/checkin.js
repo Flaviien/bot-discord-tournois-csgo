@@ -54,12 +54,14 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'checkin',
   aliases: ['checkin'],
-  category: 'Oragnisateur',
+  category: 'Organisateur',
   description: 'Lance le checkin pour les matchs en paramètres',
   usage: '<id_du_match> <id_du_match>...',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };

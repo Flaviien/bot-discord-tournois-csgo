@@ -21,4 +21,5 @@ module.exports = {
     stage2: privateEnv.CATEGORIES_CHANNELS_ID.stage2,
     stage1: privateEnv.CATEGORIES_CHANNELS_ID.stage1,
   },
+  ERROR_MESSAGE: privateEnv.ERROR_MESSAGE,
 };

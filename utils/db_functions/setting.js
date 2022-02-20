@@ -90,9 +90,9 @@ module.exports = (client) => {
       if (/false/i.test(isVetoString)) boolValue = false;
       await veto.update({ key_int: boolValue ? 1 : 0 });
       client.settings.veto = veto.key_int;
-      return 'Le veto a été modifiée';
+      return 'Le paramètre veto a été modifié';
     } catch (error) {
-      return "Erreur, le veto n'a pas été modifiée";
+      return "Erreur, Le paramètre veto n'a pas été modifié";
     }
   };
 };

@@ -39,8 +39,10 @@ module.exports.help = {
   description: "Pour créer les matchs de l'arbre initial manuellement",
   usage: '<@équipe 1> <@équipe 2>',
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: true,
   isPermissionsRequired: true,
   isArgumentRequired: true,
-  needUserMention: false,
-  needRoleMention: true,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: true,
 };

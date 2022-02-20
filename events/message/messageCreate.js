@@ -37,31 +37,43 @@ module.exports = async (client, message) => {
     let noArgsReply = `Votre commande est incomplète, ${message.author} !`;
     if (command.help.usage) {
       //Si on est ici, c'est que l'utilisateur a oublié le/les argument(s). Donc on va lui préciser comment utiliser la commande.
-      noArgsReply += `\nVoici comment utiliser la commande: ${prefix}${command.help.name} ${command.help.usage}`;
+      noArgsReply += `\nVoici comment utiliser la commande: ${client.settings.prefix}${command.help.name} ${command.help.usage}`;
     }
     return message.channel.send(noArgsReply);
   }
 
-  if (command.help.needUserMention) {
+  if (command.help.canRoleMention) {
+    if (command.help.isRoleMentionRequired) {
+      const roles = message.mentions.roles;
+      if (roles.size === 0) return message.reply('Il faut mentionner un role.');
+
+      for (const role of roles.values()) {
+        if (!role.mentionable) {
+          return message.reply(`Vous ne pouvez pas mentionner le role ${role.name}`);
+        }
+      }
+    }
+  } else {
+    if (message.mentions.roles.size !== 0) {
+      return message.channel.send(`Vous ne pouvez pas mentionner de rôle dans cette commande`);
+    }
+  }
+
+  if (command.help.canUserMention) {
     const user = message.mentions.users.first();
 
-    if (user === undefined) return message.reply('Il faut mentionner un utilisateur.');
-    if (user.bot) return message.reply('Vous ne pouvez pas mentionner un bot.');
+    if (command.help.isUserMentionRequired) {
+      if (user === undefined) return message.reply('Il faut mentionner un utilisateur.');
+      if (user.bot) return message.reply('Vous ne pouvez pas mentionner un bot.');
+    }
 
     if (!command.help.canAdminMention && message.guild.members.cache.get(user.id).permissions.has('BAN_MEMBERS')) {
       //Si la cible de la commande est un admin/modo
       return message.reply('Tu ne peux pas utiliser cette commande sur cet utilisateur.');
     }
-  }
-
-  if (command.help.needRoleMention) {
-    const roles = message.mentions.roles;
-    if (roles.size === 0) return message.reply('Il faut mentionner un role.');
-
-    for (const role of roles.values()) {
-      if (!role.mentionable) {
-        return message.reply(`Vous ne pouvez pas mentionner le role ${role.name}`);
-      }
+  } else {
+    if (message.mentions.members.size !== 0) {
+      return message.channel.send(`Vous ne pouvez pas mentionner quelqu'un dans cette commande`);
     }
   }
 

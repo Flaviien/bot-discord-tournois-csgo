@@ -81,8 +81,10 @@ module.exports.help = {
     '--scores': "Reset les scores mais garde l'arbre initial",
   },
   canAdminMention: false,
+  canUserMention: false,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
-  needUserMention: false,
-  needRoleMention: false,
+  isUserMentionRequired: false,
+  isRoleMentionRequired: false,
 };
