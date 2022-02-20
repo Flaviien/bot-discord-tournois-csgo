@@ -1,10 +1,10 @@
 module.exports.run = async (client, message, args) => {
   const discordMember = message.member;
-  const member = await client.getMember(discordMember.nickname ? discordMember.nickname : discordMember.user.username);
-  const team = (await member?.getTeam()) || [];
+  const member = await client.getMember(discordMember.nickname || discordMember.user.username);
+  const team = await member?.getTeam();
   const match = client.matches.get(team.name);
 
-  if (team.length === 0) {
+  if (team == undefined) {
     return;
   }
 

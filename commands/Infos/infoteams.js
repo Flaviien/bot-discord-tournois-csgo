@@ -3,8 +3,8 @@ const { MessageEmbed } = require('discord.js');
 module.exports.run = async (client, message, args) => {
   const teamMention = message.mentions.roles;
   if (teamMention.size === 0) {
-    const teams = (await client.getTeams()) || [];
-    if (teams.length > 0) {
+    const teams = await client.getTeams();
+    if (teams != undefined) {
       const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste de toutes les équipes du tournoi:');
 
       for (const team of teams) {
@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args) => {
       return message.channel.send({ embeds: [embed] });
     }
 
-    if (teams.length === 0) {
+    if (teams == undefined) {
       return message.channel.send(`Aucune équipe n'est actuellement enregistrée`);
     }
   }

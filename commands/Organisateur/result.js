@@ -1,7 +1,7 @@
 module.exports.run = async (client, message, args) => {
   const matchId = args[0];
-  const match = (await client.getMatch(matchId)) || [];
-  if (match.length === 0) {
+  const match = await client.getMatch(matchId);
+  if (match == undefined) {
     return message.channel.send(`Ce match n'existe pas.`);
   }
   let meetingOfThisMatch = await match.getMeeting();

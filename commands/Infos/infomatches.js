@@ -75,7 +75,7 @@ module.exports.help = {
   cooldown: 30,
   usage: '',
   options: {
-    '--admin': 'Affiche les identifiants des rencontre',
+    '--admin': 'Affiche les identifiants des rencontres',
   },
   canAdminMention: false,
   canUserMention: false,

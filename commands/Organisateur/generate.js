@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports.run = async (client, message, args) => {
-  const teams = (await client.getTeams()) || [];
+  const teams = await client.getTeams();
   const nbrTeams = await client.getSetting('nbr_teams');
   const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
   let meetings = await client.getMeetings();
@@ -11,6 +11,9 @@ module.exports.run = async (client, message, args) => {
       `Des matchs sont déjà programmés.\n
       Si vous souhaitez reinitialiser le tournoi, utilisez la commande ***${client.settings.prefix}reset*** en indiquant l'option appropriée ***(--all ou --matches)***.`
     );
+  }
+  if (teams == undefined) {
+    return message.channel.send(`Aucune équipe n'est actuellement enregistrée`);
   }
 
   if (teams.length < nbrTeams) {

@@ -8,8 +8,8 @@ module.exports.help = {
   canAdminMention: false,
   canUserMention: true,
   canRoleMention: true,
-  isPermissionsRequired: true,
+  isPermissionsRequired: false,
   isArgumentRequired: false,
-  isUserMentionRequired: true,
+  isUserMentionRequired: false,
   isRoleMentionRequired: false,
 };

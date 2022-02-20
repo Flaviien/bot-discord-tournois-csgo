@@ -63,13 +63,14 @@ module.exports = async (client, message) => {
     const user = message.mentions.users.first();
 
     if (command.help.isUserMentionRequired) {
-      if (user === undefined) return message.reply('Il faut mentionner un utilisateur.');
+      if (user == undefined) return message.reply('Il faut mentionner un utilisateur.');
       if (user.bot) return message.reply('Vous ne pouvez pas mentionner un bot.');
     }
-
-    if (!command.help.canAdminMention && message.guild.members.cache.get(user.id).permissions.has('BAN_MEMBERS')) {
-      //Si la cible de la commande est un admin/modo
-      return message.reply('Tu ne peux pas utiliser cette commande sur cet utilisateur.');
+    if (user != undefined) {
+      if (!command.help.canAdminMention && message.guild.members.cache.get(user.id).permissions.has('BAN_MEMBERS')) {
+        //Si la cible de la commande est un admin/modo
+        return message.reply('Tu ne peux pas utiliser cette commande sur cet utilisateur.');
+      }
     }
   } else {
     if (message.mentions.members.size !== 0) {
