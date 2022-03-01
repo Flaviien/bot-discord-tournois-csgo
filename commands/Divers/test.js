@@ -1,4 +1,9 @@
-module.exports.run = async (client, message, args) => {};
+module.exports.run = async (client, message, args) => {
+  const teamMention = message.mentions.roles.first();
+  const team = await client.getTeams(teamMention.id);
+  const mapName = args[0];
+  console.log(mapName);
+};
 
 module.exports.help = {
   name: 'test',

@@ -5,11 +5,9 @@ module.exports.run = async (client, message, args) => {
   Lance un timer (15min par défaut), qui vérifie si les équipes ce sont présentées.
   */
   const teams = await client.getTeams();
-  const nbrTeams = await client.getSetting('nbr_teams');
-  const checkinTime = await client.getSetting('checkin_time');
 
-  if (teams.length !== nbrTeams) {
-    return message.channel.send(`Le nombre d'équipe pour lancer les checkins n'est pas suffisant: ${teams.length}/${nbrTeams}`);
+  if (teams.length !== client.settings.nbrTeams) {
+    return message.channel.send(`Le nombre d'équipe pour lancer les checkins n'est pas suffisant: ${teams.length}/${client.settings.nbrTeams}`);
   }
 
   const matches = await client.getMatches();
@@ -38,7 +36,7 @@ module.exports.run = async (client, message, args) => {
               client.matches.delete(teamOfThisMeeting.name);
               console.log(`L'équipe ${teamOfThisMeeting.name} s'est bien présentée.`);
             } */
-          }, 60000 * checkinTime);
+          }, 60000 * client.settings.checkinTimer);
         }
 
         break;

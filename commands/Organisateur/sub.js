@@ -38,12 +38,12 @@ module.exports.run = async (client, message, args) => {
 
     for (const member of members) {
       if (member.memberId === leaderMention.id) {
-        message.channel.send(`${leaderMention.nickname !== null ? leaderMention.nickname : leaderMention.user.username} est déjà dans une équipe.`);
+        message.channel.send(`${leaderMention.nickname || leaderMention.user.username} est déjà dans une équipe.`);
         isThisErrorTrigered = true;
       }
       for (const memberMention of membersMention) {
         if (member.memberId === memberMention.id) {
-          message.channel.send(`${memberMention.nickname !== null ? memberMention.nickname : memberMention.user.username} est déjà dans une équipe.`);
+          message.channel.send(`${memberMention.nickname || memberMention.user.username} est déjà dans une équipe.`);
           isThisErrorTrigered = true;
         }
       }
@@ -53,8 +53,7 @@ module.exports.run = async (client, message, args) => {
 
   /*Test si un capitaine a été mentionné. Si oui, tout est bon, on effectue toutes les oppérations. */
   if (leaderMention === undefined) {
-    message.channel.send('Veuillez indiquer au moins un capitaine');
-    return;
+    return message.channel.send('Veuillez indiquer au moins un capitaine');
   } else {
     const role = await message.guild.roles.create({
       name: `${teamName}`,

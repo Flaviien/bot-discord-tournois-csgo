@@ -5,13 +5,17 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
-      },
-      /* stage: {
-        allowNull: false,
-        primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
-      }, */
+      },
+      stage: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      subStage: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       channelId: {
         allowNull: false,
         type: Sequelize.STRING,

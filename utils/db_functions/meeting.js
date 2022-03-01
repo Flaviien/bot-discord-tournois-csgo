@@ -31,11 +31,11 @@ module.exports = (client) => {
     }
   };
 
-  client.addMeeting = async (id, channelId, teams_id_1, teams_id_2) => {
+  client.addMeeting = async (stage, subStage, channelId, teams_id_1, teams_id_2) => {
     try {
-      const meeting = await Meeting.create({ id, channelId, BO: await client.getSetting('default_BO') });
-      await MeetingTeams.create({ meetings_id: id, teams_id: teams_id_1 });
-      await MeetingTeams.create({ meetings_id: id, teams_id: teams_id_2 });
+      const meeting = await Meeting.create({ stage, subStage, channelId, BO: await client.getSetting('default_BO') });
+      await MeetingTeams.create({ meetings_id: meeting.id, teams_id: teams_id_1 });
+      await MeetingTeams.create({ meetings_id: meeting.id, teams_id: teams_id_2 });
       return meeting;
     } catch (error) {
       console.error(error);

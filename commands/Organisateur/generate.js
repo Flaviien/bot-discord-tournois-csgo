@@ -1,9 +1,6 @@
-const { MessageEmbed } = require('discord.js');
-
 module.exports.run = async (client, message, args) => {
   const teams = await client.getTeams();
-  const nbrTeams = await client.getSetting('nbr_teams');
-  const commands = client.commands.filter((cat) => cat.help.isPermissionsRequired === false);
+  const nbrTeams = client.settings.nbrTeams;
   let meetings = await client.getMeetings();
 
   if (meetings.length > 0) {

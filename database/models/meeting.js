@@ -19,10 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Meeting.init(
     {
-      id: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
+      stage: DataTypes.INTEGER,
+      subStage: DataTypes.INTEGER,
       channelId: DataTypes.STRING,
       winner: DataTypes.STRING,
       BO: DataTypes.TINYINT,

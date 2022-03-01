@@ -30,14 +30,14 @@ module.exports = (client) => {
 
       //Ajout des rencontres
       const meetings = (await client.getMeetings()) || [];
-      const numberOfMeetingOfThisStage = meetings.filter((m) => m.id.charAt(0) === stage.toString()).length;
-      const meeting = await client.addMeeting(`${stage}e${numberOfMeetingOfThisStage + 1}`, channel.id, team1.id, team2.id);
+      const numberOfMeetingOfThisStage = meetings.filter((m) => m.stage === stage).length;
+      const meeting = await client.addMeeting(stage, numberOfMeetingOfThisStage + 1, channel.id, team1.id, team2.id);
 
       channel.send({ embeds: [embed] });
 
       //Ajout des matchs
       for (let i = 1; i <= meeting.BO; i++) {
-        await client.addMatch(`${meeting.id}.${i}`, meeting.id);
+        await client.addMatch(i, meeting.id);
       }
     } catch (error) {
       console.error(error);

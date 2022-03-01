@@ -12,8 +12,8 @@ module.exports.run = async (client, message, args) => {
     const meetings = await team.getMeetings();
     let meeting;
     for (const m of meetings) {
-      //Si il y à un gagnant à la rencontre, le match est fini donc on passe au prochain.
-      //Si il n'y à pas de gagnant, on veux selectionner celui-là.
+      //Si il y a un gagnant à la rencontre, le match est fini donc on passe au prochain.
+      //Si il n'y a pas de gagnant, on veux selectionner celui-là.
       if (m.winner === null) {
         meeting = m;
       }
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
           }
         });
 
-        //Si les 2 on "checkin" à "2"
+        //Si les 2 ont "checkin" à "2"
         if (matches[0].checkin === 2 && matches[1].checkin === 2) {
           channel.send(`Le match va commencer`);
         }

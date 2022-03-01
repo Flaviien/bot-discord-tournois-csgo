@@ -18,10 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Match.init(
     {
-      id: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
+      subId: DataTypes.INTEGER,
       status: DataTypes.STRING,
       winner: DataTypes.STRING,
       score: DataTypes.STRING,

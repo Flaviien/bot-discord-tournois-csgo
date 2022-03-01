@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args) => {
   const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
   const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
   const winnerMention = message.mentions.roles.first();
-  const score = args[2];
+  const score = args[1];
 
   if (match.maps_id === null) {
     return message.channel.send(

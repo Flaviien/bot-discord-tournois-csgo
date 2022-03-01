@@ -15,8 +15,11 @@ module.exports = async (client, message) => {
 
   for (const rawArg of rawArgs) {
     if (rawArg.charAt(0) === '-' && rawArg.charAt(1) === '-') {
-      //Tout les arguments commencant par "--". Exemple: --admin
+      //Si c'est une option. "--". Exemple: --admin
       options.push(rawArg);
+    } else if (rawArg.charAt(0) === '<' && rawArg.charAt(1) === '@' && rawArg.charAt(2) === '&') {
+      //Si c'est une mention. "<@&".
+      //On ne fait rien
     } else {
       args.push(rawArg);
     }

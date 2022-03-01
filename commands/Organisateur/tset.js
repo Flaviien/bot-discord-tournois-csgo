@@ -26,7 +26,11 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (setting === 'nbr_teams') {
-    return message.channel.send(await client.updateNbrTeams(args[1]));
+    if (args[1] === '32' || args[1] === '16' || args[1] === '8') {
+      return message.channel.send(await client.updateNbrTeams(args[1]));
+    } else {
+      return message.channel.send(`Le nombre d'équipes autorisées au tournoi sont de 32, 16 ou 8`);
+    }
   }
 
   if (setting === 'ds' || setting === 'defaultsettings') {
@@ -53,7 +57,7 @@ module.exports.help = {
     veto <true/false>: Active ou désactive la fonction veto.\n
     bo <1 | 3 | 5>: Modifie le BO par défaut. A faire avant la commande 'generate' si on souhaite changer le BO des 1ers matchs du tournoi.\n
     checkin <minutes>: Modifie le timer du checkin, en minute.\n
-    nbr_teams <number>: Modifie le nombre d'équipe qui vont participer au tournois\n
+    nbr_teams <32 | 16 | 8>: Modifie le nombre d'équipe qui vont participer au tournois\n
     `,
   canAdminMention: false,
   canUserMention: false,

@@ -20,9 +20,9 @@ module.exports = (client) => {
     }
   };
 
-  client.addMatch = async (id, meetings_id) => {
+  client.addMatch = async (subId, meetings_id) => {
     try {
-      await Match.create({ id, meetings_id, status: 'waiting' });
+      await Match.create({ subId, meetings_id, status: 'waiting' });
     } catch (error) {
       console.error(error);
     }

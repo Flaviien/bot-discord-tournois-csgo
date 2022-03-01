@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   MeetingTeams.init(
     {
       meetings_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
       },
       teams_id: {

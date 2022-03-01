@@ -1,5 +1,3 @@
-const { MessageEmbed } = require('discord.js');
-
 module.exports.run = async (client, message, args) => {
   const teamsMentions = message.mentions.roles;
 
@@ -28,7 +26,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (teams.length === 2) {
-    await client.createMatch(message, teams[0], teams[1], 8);
+    await client.createMatch(message, teams[0], teams[1], client.settings.nbrTeams / 2);
   }
 };
 
@@ -41,7 +39,7 @@ module.exports.help = {
   canUserMention: false,
   canRoleMention: true,
   isPermissionsRequired: true,
-  isArgumentRequired: true,
+  isArgumentRequired: false,
   isUserMentionRequired: false,
   isRoleMentionRequired: true,
 };

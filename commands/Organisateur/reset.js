@@ -3,7 +3,6 @@ module.exports.run = async (client, message, args, options) => {
   const resetMeetings = options.find((x) => x.toLowerCase() === '--matches');
   const resetScores = options.find((x) => x.toLowerCase() === '--scores');
   const meetings = (await client.getMeetings()) || [];
-  const nbrTeams = await client.getSetting('nbr_teams');
 
   const delChannels = async () => {
     const channels = await message.guild.channels.fetch();
@@ -51,7 +50,7 @@ module.exports.run = async (client, message, args, options) => {
   if (resetScores != undefined) {
     try {
       for (const meeting of meetings) {
-        if (meeting.id.charAt(0) != nbrTeams / 2) {
+        if (meeting.stage != client.settings.nbrTeams / 2) {
           await client.removeMeeting(meeting.id);
         }
         await client.updateMeeting(meeting.id, 'winner', null);
@@ -72,12 +71,12 @@ module.exports.run = async (client, message, args, options) => {
 module.exports.help = {
   name: 'reset',
   aliases: ['reset'],
-  description: 'Reset le tournoi. Attention, la commande ne demande pas de confirmation.',
+  description: "Reset le tournois, les matchs ou les scores en fontion de l'option choisie. Attention, la commande ne demande pas de confirmation.",
   usage: '',
   options: {
-    '--all': 'Reset tout le tournoi',
+    '--all': 'Reset les équipes et les matchs',
     '--matches': 'Reset uniquement les matchs',
-    '--scores': "Reset les scores mais garde l'arbre initial",
+    '--scores': "Reset uniquement les scores. Conserve l'arbre initial",
   },
   canAdminMention: false,
   canUserMention: false,

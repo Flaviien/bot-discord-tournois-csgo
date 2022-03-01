@@ -4,12 +4,12 @@ module.exports.run = async (client, message, args) => {
   const team = await client.getTeam('name', teamMention.name);
 
   /* Test si l'équipe existe*/
-  if (team === undefined || team === null) {
+  if (team == undefined) {
     return message.channel.send(`Cette équipe n'existe pas`);
   }
 
   membersMention.forEach(async (memberMention) => {
-    await client.addMember(team.name, memberMention.id, memberMention.nickname !== null ? memberMention.nickname : memberMention.user.username);
+    await client.addMember(team.name, memberMention.id, memberMention.nickname || memberMention.user.username);
   });
 };
 

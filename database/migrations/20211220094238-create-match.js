@@ -5,11 +5,16 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+      },
+      subId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       meetings_id: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Meetings',
           key: 'id',
