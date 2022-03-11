@@ -10,7 +10,10 @@ module.exports = {
     nbrTeams: privateEnv.DEFAULTSETTINGS.nbrTeams,
     checkinTimer: privateEnv.DEFAULTSETTINGS.checkinTimer,
     veto: privateEnv.DEFAULTSETTINGS.veto,
-    BO: privateEnv.DEFAULTSETTINGS.BO,
+    BO_stage8: privateEnv.DEFAULTSETTINGS.BO_stage8,
+    BO_stage4: privateEnv.DEFAULTSETTINGS.BO_stage4,
+    BO_stage2: privateEnv.DEFAULTSETTINGS.BO_stage2,
+    BO_stage1: privateEnv.DEFAULTSETTINGS.BO_stage1,
   },
   CHANNELS_ID: {
     logChannel: privateEnv.CHANNELS_ID.logChannel,

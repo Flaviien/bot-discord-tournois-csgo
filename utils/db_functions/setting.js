@@ -56,12 +56,12 @@ module.exports = (client) => {
     }
   };
 
-  client.updateBO = async (newBO) => {
+  client.updateBO = async (newBO, stage) => {
     try {
-      const BO = await Setting.findOne({ where: { name: 'default_BO' } });
-      await BO.update({ key_int: newBO });
-      client.settings.BO = BO.key_int;
-      return 'Le BO par défaut a été modifié';
+      const BO = await Setting.findOne({ where: { name: stage } });
+      await BO.update({ key_int: parseInt(newBO) });
+      client.settings[stage] = BO.key_int;
+      return 'Modification réussie';
     } catch (error) {
       console.error(error);
     }

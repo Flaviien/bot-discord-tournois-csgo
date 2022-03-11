@@ -24,8 +24,20 @@ module.exports = {
         key_int: 0,
       },
       {
-        name: 'default_BO',
+        name: 'BO_stage8',
         key_int: 1,
+      },
+      {
+        name: 'BO_stage4',
+        key_int: 1,
+      },
+      {
+        name: 'BO_stage2',
+        key_int: 3,
+      },
+      {
+        name: 'BO_stage1',
+        key_int: 3,
       },
     ]);
   },

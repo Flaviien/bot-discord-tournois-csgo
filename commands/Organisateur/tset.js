@@ -6,9 +6,24 @@ module.exports.run = async (client, message, args) => {
     return message.channel.send(await client.updateVeto(args[1]));
   }
 
-  if (setting === 'bo') {
+  if (setting === 'bo_stage8') {
     if (args[1] !== '1' && args[1] !== '3' && args[1] !== '5') return;
-    return message.channel.send(await client.updateBO(args[1]));
+    return message.channel.send(await client.updateBO(args[1], 'BO_stage8'));
+  }
+
+  if (setting === 'bo_stage4') {
+    if (args[1] !== '1' && args[1] !== '3' && args[1] !== '5') return;
+    return message.channel.send(await client.updateBO(args[1], 'BO_stage4'));
+  }
+
+  if (setting === 'bo_stage2') {
+    if (args[1] !== '1' && args[1] !== '3' && args[1] !== '5') return;
+    return message.channel.send(await client.updateBO(args[1], 'BO_stage2'));
+  }
+
+  if (setting === 'bo_stage1') {
+    if (args[1] !== '1' && args[1] !== '3' && args[1] !== '5') return;
+    return message.channel.send(await client.updateBO(args[1], 'BO_stage1'));
   }
 
   if (setting === 'prefix') {
@@ -55,7 +70,10 @@ module.exports.help = {
     permission <true/false>: Ajoute ou retire la permission aux partipants de tapper des commandes de tournoi\n
     prefix <new_prefix>: Change le prefix des commandes\n
     veto <true/false>: Active ou désactive la fonction veto.\n
-    bo <1 | 3 | 5>: Modifie le BO par défaut. A faire avant la commande 'generate' si on souhaite changer le BO des 1ers matchs du tournoi.\n
+    bo_stage8 <1 | 3 | 5>: Modifie le BO des matchs de 8ème. A faire avant la création du moindre match.\n
+    bo_stage4 <1 | 3 | 5>: Modifie le BO des matchs de Quart. A faire avant la création des matchs de Quart.\n
+    bo_stage2 <1 | 3 | 5>: Modifie le BO des matchs de Demi-finales. A faire avant la création des matchs de Demi-finales.\n
+    bo_stage1 <1 | 3 | 5>: Modifie le BO du match de finale. A faire avant la création du match de la finale .\n
     checkin <minutes>: Modifie le timer du checkin, en minute.\n
     nbr_teams <32 | 16 | 8>: Modifie le nombre d'équipe qui vont participer au tournois\n
     `,

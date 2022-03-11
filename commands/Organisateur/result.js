@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
 
   if (match.status === 'waiting') {
     return message.channel.send(
-      `Ce match n'est pas défini comme étant commencé. En lui définissant une map, ce match sera défini comme étant commencé. Essayez la commande ***${client.settings.prefix}setmap***.`
+      `Avant de pouvoir définir un résultat à un match, vous devez définir lui une map. Essayez la commande ***${client.settings.prefix}setmap***.`
     );
   }
 

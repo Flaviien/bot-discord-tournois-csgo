@@ -32,8 +32,18 @@ module.exports = (client) => {
   };
 
   client.addMeeting = async (stage, subStage, channelId, teams_id_1, teams_id_2) => {
+    let BO_stage = '';
+    if (stage === 8) {
+      BO_stage = 'BO_stage8';
+    } else if (stage === 4) {
+      BO_stage = 'BO_stage4';
+    } else if (stage === 2) {
+      BO_stage = 'BO_stage2';
+    } else if (stage === 1) {
+      BO_stage = 'BO_stage1';
+    }
     try {
-      const meeting = await Meeting.create({ stage, subStage, channelId, BO: await client.getSetting('default_BO') });
+      const meeting = await Meeting.create({ stage, subStage, channelId, BO: client.settings[BO_stage] });
       await MeetingTeams.create({ meetings_id: meeting.id, teams_id: teams_id_1 });
       await MeetingTeams.create({ meetings_id: meeting.id, teams_id: teams_id_2 });
       return meeting;
