@@ -32,6 +32,7 @@ module.exports = (client) => {
     try {
       const match = await client.getMatch(id);
       await match.update({ [key]: value });
+      return match;
     } catch (error) {
       console.error(error);
     }

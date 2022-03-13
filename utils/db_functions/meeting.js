@@ -4,18 +4,27 @@ const MeetingTeams = models.MeetingTeams;
 const { Op } = require('sequelize');
 
 module.exports = (client) => {
-  /* client.getMeetingTeams = async (meetings_id) => {
-    try {
-      const meetings = await MeetingTeams.findAll({ where: { meetings_id } });
-      return meetings;
-    } catch (error) {
-      console.error(error);
-    }
-  }; */
-
   client.getMeeting = async (id) => {
     try {
       const meeting = await Meeting.findOne({ where: { id } });
+      return meeting;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  client.getMeetingByChannelId = async (channelId) => {
+    try {
+      const meeting = await Meeting.findOne({ where: { channelId } });
+      return meeting;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  client.getMeetingByStageAndSubStage = async (stage, subStage) => {
+    try {
+      const meeting = await Meeting.findOne({ where: { stage, subStage } });
       return meeting;
     } catch (error) {
       console.error(error);
