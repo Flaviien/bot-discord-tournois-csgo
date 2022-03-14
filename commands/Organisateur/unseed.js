@@ -1,23 +1,14 @@
 module.exports.run = async (client, message, args) => {
-  const teamMention = message.mentions.roles.first();
-
-  const team = await client.getTeam('roleId', teamMention.id);
-
-  if (team == null) {
-    return message.channel.send(`L'équipe ${teamMention.name} n'est pas inscrite au tournoi`);
-  }
-
-  const meetingsOfThisTeam = await team.getMeetings();
-  const meeting = meetingsOfThisTeam[0]; //C
+  const meeting = await client.getMeetingByChannelId(message.channel.id);
 
   if (meeting == null) {
-    return message.channel.send(`L'équipe ${teamMention.name} n'a pas de match en cours`);
+    return message.channel.send(`Cette commande fonctionne uniquement dans les channels des rencontres`);
   }
 
   const matches = await meeting.getMatches();
 
   if (matches == null) {
-    return message.channel.send(`L'équipe ${teamMention.name} n'a pas de match en cours`);
+    return message.channel.send(client.config.ERROR_MESSAGE);
   }
 
   for (const match of matches) {
@@ -28,27 +19,20 @@ module.exports.run = async (client, message, args) => {
     }
   }
 
-  const channels = await message.guild.channels.fetch();
-  const channel = channels.get(meeting.channelId);
-
-  if (channel == null) {
-    return message.channel.send(`Une erreur est survenue`);
-  } else {
-    channel.delete();
-    await client.removeMeeting(meeting.id);
-  }
+  message.channel.delete();
+  await client.removeMeeting(meeting.id);
 };
 
 module.exports.help = {
   name: 'unseed',
   aliases: ['unseed', 'us'],
   description: "Pour supprimer les matchs de l'arbre initial manuellement",
-  usage: '<@équipe> (Une des deux équipes suffit pour supprimer la rencontre)',
+  usage: '',
   canAdminMention: false,
   canUserMention: false,
-  canRoleMention: true,
+  canRoleMention: false,
   isPermissionsRequired: true,
   isArgumentRequired: false,
   isUserMentionRequired: false,
-  isRoleMentionRequired: true,
+  isRoleMentionRequired: false,
 };

@@ -1,6 +1,6 @@
 module.exports.run = async (client, message, args, options) => {
   const resetAll = options.find((x) => x.toLowerCase() === '--all');
-  const resetMeetings = options.find((x) => x.toLowerCase() === '--matches');
+  const resetMeetings = options.find((x) => x.toLowerCase() === '--matchs');
   const resetScores = options.find((x) => x.toLowerCase() === '--scores');
   const meetings = (await client.getMeetings()) || [];
 
@@ -75,7 +75,7 @@ module.exports.help = {
   usage: '',
   options: {
     '--all': 'Reset les équipes et les matchs',
-    '--matches': 'Reset uniquement les matchs',
+    '--matchs': 'Reset uniquement les matchs',
     '--scores': "Reset uniquement les scores. Conserve l'arbre initial",
   },
   canAdminMention: false,

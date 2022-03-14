@@ -1,64 +1,49 @@
-module.exports.run = async (client, message, args) => {
-  /*
-  Verification du nombre d'équipes présentes.
-  Update le statut du checkin, pour chaque matchs en argument, dans une collection attachée au client.
-  Lance un timer (15min par défaut), qui vérifie si les équipes ce sont présentées.
-  */
-  const teams = await client.getTeams();
+module.exports.run = async (client, message, args, options) => {
+  const meetings = await client.getMeetings();
 
-  if (teams.length !== client.settings.nbrTeams) {
-    return message.channel.send(`Le nombre d'équipe pour lancer les checkins n'est pas suffisant: ${teams.length}/${client.settings.nbrTeams}`);
+  if (meetings.length < client.settings.nbrTeams / 2) {
+    return message.channel.send(`Veuillez finaliser l'arbre initial avant de : ${meetings.length}/${client.settings.nbrTeams / 2}`);
   }
 
-  const matches = await client.getMatches();
+  const meeting = await client.getMeetingByChannelId(message.channel.id);
 
-  for (const [i, arg] of args.entries()) {
-    for (const [y, match] of matches.entries()) {
-      if (match.id === arg) {
-        const meetingOfThisMatch = await match.getMeeting();
-        const channel = message.guild.channels.cache.get(meetingOfThisMatch.channelId);
-        const teamsOfThisMeeting = await meetingOfThisMatch.getTeams();
-
-        channel.send(
-          `${teamsOfThisMeeting[0].name} & ${teamsOfThisMeeting[1].name}, merci de vous présenter en tappant la commande ***${client.settings.prefix}ready***`
-        );
-
-        for (const teamOfThisMeeting of teamsOfThisMeeting) {
-          client.matches.set(teamOfThisMeeting.name, { id: match.id, checkin: 1 });
-          setTimeout(async () => {
-            if (client.matches.get(teamOfThisMeeting.name).checkin === 1) {
-              client.matches.delete(teamOfThisMeeting.name);
-
-              channel.send(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
-              console.log(`L'équipe ${teamOfThisMeeting.name} ne s'est pas présentée à temps !`);
-            }
-            /* if (client.matches.get(teamOfThisMeeting.name).checkin === 2) {
-              client.matches.delete(teamOfThisMeeting.name);
-              console.log(`L'équipe ${teamOfThisMeeting.name} s'est bien présentée.`);
-            } */
-          }, 60000 * client.settings.checkinTimer);
-        }
-
-        break;
-      }
-
-      if (y === matches.length - 1) {
-        message.channel.send(`Le match ${arg} n'a pas été trouvé. Le checkin n'a PAS été lancé pour ce match !`);
-      }
-    }
+  if (meeting == null) {
+    return message.channel.send(`Cette commande fonctionne uniquement dans les channels des rencontres`);
   }
+
+  const teams = await meeting.getTeams();
+
+  for (const team of teams) {
+    client.meetings.set(team.name, { id: meeting.id, checkin: 1 });
+    setTimeout(() => {
+      if (client.meetings.get(team.name).checkin === 1) {
+        client.meetings.delete(team.name);
+
+        message.channel.send(`L'équipe ${team.name} ne s'est pas présentée à temps !`);
+        console.log(`L'équipe ${team.name} ne s'est pas présentée à temps !`);
+      } else if (client.meetings.get(team.name).checkin === 2) {
+        client.meetings.delete(team.name);
+        console.log(`[CONSOLE] L'équipe ${team.name} s'est bien présentée.`);
+      }
+    }, 60000 * client.settings.checkinTimer);
+  }
+
+  message.channel.send(`${teams[0].name} & ${teams[1].name}, merci de vous présenter en tappant la commande ***${client.settings.prefix}ready***`);
 };
 
 module.exports.help = {
   name: 'checkin',
   aliases: ['checkin'],
-  description: 'Lance le checkin pour les matchs en paramètres',
-  usage: '<id_du_match> <id_du_match>...',
+  description: 'Lance le checkin du match',
+  usage: '',
+  options: {
+    '--delay': 'Stop le chrono mais laisse le droit aux équipes de faire la commande "ready"',
+  },
   canAdminMention: false,
   canUserMention: false,
   canRoleMention: false,
   isPermissionsRequired: true,
-  isArgumentRequired: true,
+  isArgumentRequired: false,
   isUserMentionRequired: false,
   isRoleMentionRequired: false,
 };

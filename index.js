@@ -17,7 +17,7 @@ require('./utils/discordjs_functions/index')(client);
 client.config = require('./config');
 client.settings = {};
 client.commands = new Discord.Collection();
-client.matches = new Discord.Collection();
+client.meetings = new Discord.Collection(); //Pour la gestion des checkins
 
 loadCommands(client);
 loadEvents(client);

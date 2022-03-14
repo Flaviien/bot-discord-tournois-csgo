@@ -2,46 +2,30 @@ module.exports.run = async (client, message, args) => {
   const discordMember = message.member;
   const member = await client.getMember(discordMember.nickname || discordMember.user.username);
   const team = await member?.getTeam();
-  const match = client.matches.get(team.name);
+  if (team == null) return;
 
-  if (team == undefined) {
-    return;
+  const clientMeeting = client.meetings.get(team.name);
+  if (clientMeeting == null) return;
+
+  const meeting = await client.getMeetingByChannelId(message.channel.id);
+  if (meeting == null) {
+    return message.channel.send(`Cette commande fonctionne uniquement dans les channels des rencontres`);
   }
 
-  if (match) {
-    const meetings = await team.getMeetings();
-    let meeting;
-    for (const m of meetings) {
-      //Si il y a un gagnant à la rencontre, le match est fini donc on passe au prochain.
-      //Si il n'y a pas de gagnant, on veux selectionner celui-là.
-      if (m.winner === null) {
-        meeting = m;
-      }
+  if (clientMeeting.checkin === 1) {
+    client.meetings.set(team.name, { id: meeting.id, checkin: 2 });
+    message.channel.send(`${team.name} est là !`);
+
+    const clientMeetings = client.meetings.filter((m) => m.id === clientMeeting.id);
+    if (clientMeetings.size !== 2) {
+      message.channel.send(client.config.ERROR_MESSAGE);
     }
-
-    const channel = message.guild.channels.cache.get(meeting.channelId);
-    if (message.channel.id === channel.id) {
-      if (match.checkin === 1) {
-        client.matches.set(team.name, { id: match.id, checkin: 2 });
-        channel.send(`${team.name} est là !`);
-
-        //Récupération des 2 équipes
-        const matches = [];
-        client.matches.forEach((m) => {
-          if (m.id === match.id) {
-            matches.push(m);
-          }
-        });
-
-        //Si les 2 ont "checkin" à "2"
-        if (matches[0].checkin === 2 && matches[1].checkin === 2) {
-          channel.send(`Le match va commencer`);
-        }
-      }
-      if (match.checkin === 2) {
-        channel.send(`${team.name} s'est déjà présentée`);
-      }
+    if (clientMeetings.at(0).checkin === 2 && clientMeetings.at(1).checkin === 2) {
+      message.channel.send(`Le match va commencer`);
     }
+  }
+  if (clientMeeting.checkin === 2) {
+    message.channel.send(`${team.name} s'est déjà présentée`);
   }
 };
 

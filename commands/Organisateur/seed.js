@@ -1,6 +1,10 @@
 module.exports.run = async (client, message, args) => {
-  const teamsMentions = message.mentions.roles;
+  const verifNbrTeams = await client.getTeams();
+  if (verifNbrTeams.length !== client.settings.nbrTeams) {
+    return message.channel.send(`Le nombre d'équipe pour créer les matchs n'est pas suffisant: ${teams.length}/${client.settings.nbrTeams}`);
+  }
 
+  const teamsMentions = message.mentions.roles;
   if (teamsMentions.size != 2) {
     return message.channel.send(`Vous devez mentionner deux équipes`);
   }
@@ -22,7 +26,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (teams.length !== 2) {
-    return message.channel.send(`Une erreur est survenue`);
+    return message.channel.send(client.config.ERROR_MESSAGE);
   }
 
   if (teams.length === 2) {
