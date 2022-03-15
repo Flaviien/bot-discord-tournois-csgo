@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args) => {
 
     if (typeof streams == 'object' && streams.length !== 0) {
       // Affiche les stream en cours.
-      const embed = new MessageEmbed().setColor('#C016FF').setTitle('Voici la liste des streams en cours:');
+      const embed = new MessageEmbed().setColor('#0000f6').setTitle('Voici la liste des streams en cours:');
 
       streams.forEach((stream) => {
         embed.addField(`${stream.name} :`, `${stream.url}`);

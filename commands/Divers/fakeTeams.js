@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args) => {
     for (let j = 1; j <= 5; j++) {
       let leader = false;
       if (j === 1) leader = true;
-      await client.addMember(teams[y - 1], `fake${Math.floor(Math.random() * 1000000)}`, `Membre${y}.${j}`, leader);
+      await client.addMember(teams[y - 1], Math.floor(Math.random() * 1000000), `Membre${y}.${j}`, leader);
     }
   }
 

@@ -37,12 +37,12 @@ module.exports.run = async (client, message, args) => {
     let isThisErrorTrigered = false;
 
     for (const member of members) {
-      if (member.memberId === leaderMention.id) {
+      if (member.id === leaderMention.id) {
         message.channel.send(`${leaderMention.nickname || leaderMention.user.username} est déjà dans une équipe.`);
         isThisErrorTrigered = true;
       }
       for (const memberMention of membersMention) {
-        if (member.memberId === memberMention.id) {
+        if (member.id === memberMention.id) {
           message.channel.send(`${memberMention.nickname || memberMention.user.username} est déjà dans une équipe.`);
           isThisErrorTrigered = true;
         }

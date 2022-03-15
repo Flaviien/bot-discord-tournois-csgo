@@ -2,24 +2,25 @@ const models = require('../../database/models/index.js');
 const Member = models.Member;
 
 module.exports = (client) => {
-  client.getMember = async (memberName) => {
+  client.getMember = async (key, value) => {
+    //By Name, by Id or by role
     try {
-      const member = await Member.findOne({ where: { name: memberName } });
+      const member = await Member.findOne({ where: { [key]: value } });
       return member;
     } catch (error) {
       console.error(error);
     }
   };
 
-  /* client.getMember = async (memberName = null, memberId = null) => {
+  /* client.getMember = async (name = null, id = null) => {
     //By Name or by Id
     try {
       if (teamName !== null) {
-        const member = await Member.findOne({ where: { name: memberName } });
+        const member = await Member.findOne({ where: { name } });
         return member;
       }
       if (teamId !== null) {
-        const member = await Member.findOne({ where: { name: memberId } });
+        const member = await Member.findOne({ where: { id } });
         return member;
       }
     } catch (error) {
@@ -41,7 +42,7 @@ module.exports = (client) => {
       const team = await client.getTeam('name', teamName);
 
       await Member.create({
-        memberId: memberId,
+        id: memberId,
         name: memberName,
         isLeader: isLeader ? 1 : 0,
         teams_id: team.id,
@@ -51,9 +52,9 @@ module.exports = (client) => {
     }
   };
 
-  client.removeMember = async (memberId) => {
+  client.removeMember = async (id) => {
     try {
-      const member = await Member.findOne({ where: { memberId } });
+      const member = await Member.findOne({ where: { id } });
       member.destroy();
     } catch (error) {
       console.error(error);

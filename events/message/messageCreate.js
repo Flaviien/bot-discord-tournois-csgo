@@ -101,5 +101,9 @@ module.exports = async (client, message) => {
   timestamps.set(message.author.id, timeNow);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-  command.run(client, message, args, options);
+  try {
+    command.run(client, message, args, options);
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
     return message.channel.send("Les matchs n'ont pas encore été programmés");
   }
 
-  const embed = new MessageEmbed().setColor('#36393F').setTitle('Voici la liste de tous les matchs du tournoi:');
+  const embed = new MessageEmbed().setColor('#0000f6').setTitle('Voici la liste de tous les matchs du tournoi:');
 
   for (const meeting of meetings) {
     try {
@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args) => {
     try {
       const meeting = await client.getMeeting(args[0]);
       const teams = await meeting.getTeams();
-      const embed = new MessageEmbed().setColor('#36393F').setTitle(`${teams[0].name} vs ${teams[1].name}  - BO${meeting.BO}`);
+      const embed = new MessageEmbed().setColor('#0000f6').setTitle(`${teams[0].name} vs ${teams[1].name}  - BO${meeting.BO}`);
       const matches = await meeting.getMatches();
 
       embed.setDescription(await matchDetails(matches));

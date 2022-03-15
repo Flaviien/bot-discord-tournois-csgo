@@ -1,6 +1,6 @@
 module.exports.run = async (client, message, args) => {
   const discordMember = message.member;
-  const member = await client.getMember(discordMember.nickname || discordMember.user.username);
+  const member = await client.getMember('id', discordMember.user.id);
   const team = await member?.getTeam();
   if (team == null) return;
 
