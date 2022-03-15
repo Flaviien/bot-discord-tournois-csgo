@@ -1,34 +1,35 @@
 module.exports.run = async (client, message, args) => {
   const teamMention = message.mentions.roles.first();
-  const score = args[0];
-
   if (teamMention == null) {
-    return message.channel.send(`L'équipe n'a pas été trouvé`);
+    return message.channel.send(`Ce rôle n'existe pas`);
   }
 
   const team = await client.getTeam('name', teamMention.name);
-
   if (team == null) {
-    return message.channel.send(`L'équipe n'a pas été trouvé`);
+    return message.channel.send(`L'équipe n'a pas été trouvée`);
   }
 
-  //Récupération du meeting concerné
-  const meetingsOfThisTeam = await team.getMeetings();
-  const meetingOfThisTeam = meetingsOfThisTeam.find((m) => m.winner === null);
-
-  if (meetingOfThisTeam == undefined) {
-    return message.channel.send(`Cette équipe n'a pas de match en cours`);
+  const meeting = await client.getMeetingByChannelId(message.channel.id);
+  if (meeting == null) {
+    return message.channel.send(`Cette commande fonctionne uniquement dans les channels des rencontres`);
   }
-  const channel = message.guild.channels.cache.get(meetingOfThisTeam.channelId);
-  const teams = await meetingOfThisTeam.getTeams();
 
-  if (message.channel.id !== meetingOfThisTeam.channelId) {
-    return;
+  const teams = await meeting.getTeams();
+  if (teams == null) {
+    return message.channel.send(`Les équipes n'ont pas été trouvées`);
+  }
+  if (teams.length !== 2) {
+    return message.channel.send(client.config.ERROR_MESSAGE);
+  }
+
+  const found = teams.find((t) => t.roleId === team.roleId);
+  if (found == null) {
+    return message.channel.send(`L'équipe mentionnée ne fait pas partie de cette rencontre.`);
   }
 
   //Récupération du match concerné. La verif du subId pour vérifier si on récupere le bon match dans le cas d'un BO3 ou BO5
-  let matchsOfThisMeeting = await meetingOfThisTeam.getMatches();
-  let subId = client.settings[`BO_stage${meetingOfThisTeam.stage}`]; //subId = 1 ou 3 ou 5
+  let matchsOfThisMeeting = await meeting.getMatches();
+  let subId = client.settings[`BO_stage${meeting.stage}`]; //subId = 1 ou 3 ou 5
 
   matchsOfThisMeeting.forEach((m) => {
     if (m.winner === null && m.subId < subId) {
@@ -52,6 +53,7 @@ module.exports.run = async (client, message, args) => {
     return message.channel.send(`Ce match est déjà fini`);
   }
 
+  const score = args[0];
   if (!/\d\d-\d\d/.test(score)) {
     return message.channel.send('Le score doit être au format 00-00. Exemple: 16-05');
   }
@@ -62,23 +64,23 @@ module.exports.run = async (client, message, args) => {
     await client.updateMatch(matchOfThisMeeting.id, 'winner', team.name),
   ]);
 
-  matchsOfThisMeeting = await meetingOfThisTeam.getMatches(); //On refait getMatches pour actualiser avec les nouvelles valeurs
+  matchsOfThisMeeting = await meeting.getMatches(); //On refait getMatches pour actualiser avec les nouvelles valeurs
 
   //Condition qui définie le gagnant du meeting.
-  if (meetingOfThisTeam.BO === 1) {
-    await client.updateMeeting(meetingOfThisTeam.id, 'winner', teamMention.name);
-  } else if (meetingOfThisTeam.BO === 3 || meetingOfThisTeam.BO === 5) {
+  if (meeting.BO === 1) {
+    await client.updateMeeting(meeting.id, 'winner', teamMention.name);
+  } else if (meeting.BO === 3 || meeting.BO === 5) {
     for (const team of teams) {
       const nbrOfWin = matchsOfThisMeeting.filter((m) => m.winner === team.name).length;
-      if (meetingOfThisTeam.BO === 3) {
+      if (meeting.BO === 3) {
         if (nbrOfWin === 2) {
-          await client.updateMeeting(meetingOfThisTeam.id, 'winner', teamMention.name);
+          await client.updateMeeting(meeting.id, 'winner', teamMention.name);
           const matchToCanceled = matchsOfThisMeeting.find((m) => m.status === 'waiting');
           if (matchToCanceled != undefined) await client.updateMatch(matchToCanceled.id, 'status', 'canceled');
         }
-      } else if (meetingOfThisTeam.BO === 5) {
+      } else if (meeting.BO === 5) {
         if (nbrOfWin === 3) {
-          await client.updateMeeting(meetingOfThisTeam.id, 'winner', teamMention.name);
+          await client.updateMeeting(meeting.id, 'winner', teamMention.name);
           const matchesToCanceled = matchsOfThisMeeting.filter((m) => m.status === 'waiting');
           for (const matchToCanceled of matchesToCanceled) {
             if (matchToCanceled != undefined) await client.updateMatch(matchToCanceled.id, 'status', 'canceled');
@@ -88,7 +90,7 @@ module.exports.run = async (client, message, args) => {
     }
   }
 
-  channel.send(
+  message.channel.send(
     `Le score de la **map n°${matchOfThisMeeting.subId}** du match **${teams[0].name} vs ${teams[1].name}** a été défini sur **${score}**. Le gagnant est **${teamMention.name}**`
   );
 
@@ -136,7 +138,7 @@ module.exports.help = {
   canUserMention: false,
   canRoleMention: true,
   isPermissionsRequired: true,
-  isArgumentRequired: false, //need true; false for dev
+  isArgumentRequired: true,
   isUserMentionRequired: false,
   isRoleMentionRequired: true,
 };
