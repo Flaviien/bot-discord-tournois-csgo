@@ -13,15 +13,15 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (clientMeeting.checkin === 1) {
-    client.meetings.set(team.name, { id: meeting.id, checkin: 2 });
+    client.meetings.set(team.name, { id: meeting.id, checkin: 2, timer: clientMeeting.timer });
     message.channel.send(`${team.name} est là !`);
 
     const clientMeetings = client.meetings.filter((m) => m.id === clientMeeting.id);
     if (clientMeetings.size !== 2) {
-      message.channel.send(client.config.ERROR_MESSAGE);
+      return message.channel.send(client.config.ERROR_MESSAGE);
     }
     if (clientMeetings.at(0).checkin === 2 && clientMeetings.at(1).checkin === 2) {
-      message.channel.send(`Le match va commencer`);
+      return message.channel.send(`Le match va commencer`);
     }
   }
   if (clientMeeting.checkin === 2) {

@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args, options) => {
     }
   };
 
-  if (resetAll != undefined) {
+  if (resetAll) {
     const teams = (await client.getTeams()) || [];
     const roles = await message.guild.roles.fetch();
 
@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args, options) => {
     } */
   }
 
-  if (resetMeetings != undefined) {
+  if (resetMeetings) {
     delChannels();
     await client.removeMeetings();
     /* if () {
@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args, options) => {
     } */
   }
 
-  if (resetScores != undefined) {
+  if (resetScores) {
     try {
       for (const meeting of meetings) {
         if (meeting.stage != client.settings.nbrTeams / 2) {
